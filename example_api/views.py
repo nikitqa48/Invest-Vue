@@ -1,32 +1,30 @@
-from django.shortcuts import render
-from rest_framework import generics, viewsets
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView
 from .serializers import *
 
 
-class ProfileListView(ModelViewSet):
-    queryset = Connect.objects.all()
+class ConnectListView(CreateAPIView):
     serializer_class = ConnectSerializers
 
-class InformationView(ModelViewSet):
+class InformationView(ListAPIView):
     queryset = InformationForRegion.objects.all()
     serializer_class = InformationSerializers
 
-inform_list = InformationView.as_view({
-    'get': 'list',
-})
-
-class NewsView(ModelViewSet):
+class NewsView(ListAPIView):
     queryset = News.objects.all()
     serializer_class = NewsSerializers
 
-news_list = NewsView.as_view({
-    'get': 'list',
-})
-class GreenfieldViews(ModelViewSet):
+class GreenfieldViews(ListAPIView):
     queryset = Greenfield.objects.all()
     serializer_class = GreenfieldSerializers
 
-green_list = GreenfieldViews.as_view({
-    'get':'list'
-})
+class BrownfieldViews(ListAPIView):
+    queryset = Brownfield.objects.all()
+    serializer_class = BrownfieldSerializers
+
+class SupportView(ListAPIView):
+    queryset = Support.objects.all()
+    serializer_class = SupportSerializers
+
+class DetailNews(RetrieveAPIView):
+    queryset = News.objects.all()
+    serializer_class = NewsSerializers
