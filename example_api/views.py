@@ -1,5 +1,6 @@
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView
 from .serializers import *
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class ConnectListView(CreateAPIView):
@@ -24,6 +25,10 @@ class BrownfieldViews(ListAPIView):
 class SupportView(ListAPIView):
     queryset = Support.objects.all()
     serializer_class = SupportSerializers
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['type', 'recipient', 'industry', 'territory']
+
+
 
 class DetailNews(RetrieveAPIView):
     queryset = News.objects.all()

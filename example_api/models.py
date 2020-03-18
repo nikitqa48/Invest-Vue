@@ -134,7 +134,8 @@ class Industry(models.Model):
 class Support(models.Model):
     recipient_choice = (
         ('small', 'Малый (1-100 чел.)'),
-        ('average', 'Средний (100-250 чел.)'),
+        ('medium', 'Средний (100-250 чел.)'),
+        ('small_medium', 'Малый и средний (1-250 чел.)'),
         ('big', "Крупный (от 251 чел.)"),
         ('all', 'Все')
     )
@@ -155,7 +156,7 @@ class Support(models.Model):
     condition = models.TextField('Условия', blank=True)
     type = models.CharField('Тип поддержки', choices= choice, max_length=50)
     organisation = models.TextField('кто выдает меру поддержки')
-    industry = models.ForeignKey(Industry, on_delete=models.CASCADE, verbose_name='Отрасль')
+    industry = models.ManyToManyField(Industry, verbose_name='Отрасль')
     category = models.CharField('Категория налогоплатильщика', max_length=70, blank=True)
     property_rate = models.TextField('Налоговая ставка на имущество', blank=True)
     profit = models.TextField('Налог на прибыль', blank=True)
