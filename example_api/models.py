@@ -90,6 +90,11 @@ class News(models.Model):
 class Greenfield(models.Model):
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     number = models.CharField('Кадастровый номер', max_length=50)
+    choice_type = (
+        ('greenfield', 'Гринфилд'),
+        ('brownfield', 'Браунфилд')
+    )
+    type = models.CharField('Тип участка', choices=choice_type, max_length=20, default=0)
     image = models.ImageField(upload_to='greenfield',height_field=None,width_field=None,null=True)
     square = models.CharField('Площадь(га)', max_length=10)
     choice = (
@@ -100,24 +105,11 @@ class Greenfield(models.Model):
 
     class Meta:
         ordering = ('number',)
-        verbose_name = 'Гринфилд'
+        verbose_name = 'Земельный участок'
+        verbose_name_plural = "Земельные участки"
 
     def __str__(self):
         return self.number
-
-
-class Brownfield(models.Model):
-    region = models.ForeignKey(Region, on_delete=models.CASCADE)
-    number = models.CharField('Кадастровый номер', max_length=50)
-    image = models.ImageField(upload_to='brownfield', height_field=None, width_field=None, null=True)
-    square = models.CharField('Площадь(га)', max_length=15)
-
-    class Meta:
-        ordering = ('number',)
-        verbose_name = 'Браунфилд'
-
-    def __str__(self):
-        return  self.number
 
 
 class Industry(models.Model):
@@ -146,25 +138,30 @@ class Support(models.Model):
         ('vne', 'территория вне'),
         ('all', 'любая')
     )
-    territory = models.CharField('Территория реализации проекта', choices=territory_choice, max_length=50, blank=True)
-    recipient = models.CharField('Получатель', choices=recipient_choice, max_length=150)
-    name = models.CharField('Имя поддержки', max_length=500)
     choice = (
         ('direct', 'Прямая финансовая поддержка'),
         ('loan', 'заемное финансирование')
     )
+    territory = models.CharField('Территория реализации проекта', choices=territory_choice, max_length=50, blank=True)
+    recipient = models.CharField('Получатель', choices=recipient_choice, max_length=150)
+    name = models.CharField('Имя поддержки', max_length=500)
     condition = models.TextField('Условия', blank=True)
     type = models.CharField('Тип поддержки', choices= choice, max_length=50)
     organisation = models.TextField('кто выдает меру поддержки')
     industry = models.ManyToManyField(Industry, verbose_name='Отрасль')
-    category = models.CharField('Категория налогоплатильщика', max_length=70, blank=True)
+    category = models.CharField('Категория налогоплатильщика', max_length=300, blank=True)
     property_rate = models.TextField('Налоговая ставка на имущество', blank=True)
     profit = models.TextField('Налог на прибыль', blank=True)
     transport = models.TextField('Налоговая ставка по транспортному налогу', blank=True)
     land = models.TextField('Налоговая ставка по земельному налогу', blank=True)
     nds = models.TextField('Налоговая ставка НДС', blank=True)
+    summ = models.CharField('Сумма займа', max_length=50, blank=True)
     expenses = models.TextField('Затраты подлежащие возмещению', blank=True)
-
+    form_choice = (
+        ('lawyer', 'Юр.лицо'),
+        ('ip', 'ИП')
+    )
+    form = models.CharField('Категория получателя', choices=form_choice, max_length=20, default=0, blank=True)
     class Meta:
         verbose_name = 'Мера поддержки'
         verbose_name_plural = 'Меры поддержки'

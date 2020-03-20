@@ -42,13 +42,6 @@ class GreenfieldAdmin(admin.ModelAdmin):
     search_fields = ['number','square']
     ordering = ['region']
 
-@admin.register(Brownfield)
-
-class BrownfieldAdmin(admin.ModelAdmin):
-    list_display = ['number', 'square', 'region', 'image']
-    list_filter = ['region']
-    search_fields = ['number', 'square']
-    ordering = ['region']
 
 @admin.register(Support)
 

@@ -21,11 +21,6 @@ class GreenfieldSerializers(ModelSerializer):
         model = Greenfield
         fields = ['image','square','form','region','number']
 
-class BrownfieldSerializers(ModelSerializer):
-    class Meta:
-        model = Brownfield
-        fields = ['image', 'square', 'region', 'number']
-
 
 class IndustrySerializers(ModelSerializer):
     class Meta:
