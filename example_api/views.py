@@ -23,9 +23,13 @@ class SupportView(ListAPIView):
     queryset = Support.objects.all()
     serializer_class = SupportSerializers
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['type', 'recipient', 'industry', 'territory', 'form']
+    filterset_fields = ['type', 'recipient', 'industry', 'territory', 'form', 'name']
 
 
 class DetailNews(RetrieveAPIView):
     queryset = News.objects.all()
     serializer_class = NewsSerializers
+
+class DetailSupport(RetrieveAPIView):
+    queryset = Support.objects.all()
+    serializer_class = SupportSerializers

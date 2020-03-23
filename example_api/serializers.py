@@ -32,8 +32,10 @@ class SupportSerializers(ModelSerializer):
     industry = IndustrySerializers()
     class Meta:
         model = Support
-        fields = ['recipient', 'name', 'type',
+        fields = ['id', 'recipient', 'name', 'type',
                 'organisation', 'category', 'industry',
                 'property_rate', 'profit', 'transport',
-                'land', 'nds', 'expenses', 'condition', 'territory']
+                'land', 'nds', 'expenses', 'condition', 'territory',
+                  'implementation', 'type_project', 'target', 'authority',
+                  'project_name', 'program_name', 'npa', 'money', 'summ']
 

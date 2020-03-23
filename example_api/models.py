@@ -2,12 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
+from .choices import *
 
 class Profile(User):
     GENDER = (
-    ('male',"Мужчина"),
-    ('female','Женщина'),
-            )
+    ('male', "Мужчина"),
+    ('female', 'Женщина'),
+    )
     gender = models.CharField('Пол', choices=GENDER, max_length=6)
     phone = models.CharField('Телефон',max_length=20)
     address= models.CharField('Адрес', max_length=150)
@@ -40,7 +41,6 @@ class Connect(models.Model):
 
 class Region(models.Model):
     name = models.CharField('Имя района', max_length=30)
-    
     class Meta:
         verbose_name = 'Район'
         verbose_name_plural = 'Районы'
@@ -90,17 +90,9 @@ class News(models.Model):
 class Greenfield(models.Model):
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     number = models.CharField('Кадастровый номер', max_length=50)
-    choice_type = (
-        ('greenfield', 'Гринфилд'),
-        ('brownfield', 'Браунфилд')
-    )
     type = models.CharField('Тип участка', choices=choice_type, max_length=20, default=0)
     image = models.ImageField(upload_to='greenfield',height_field=None,width_field=None,null=True)
     square = models.CharField('Площадь(га)', max_length=10)
-    choice = (
-        ('goverment','государственная'),
-        ('private','частная')
-        )
     form = models.CharField('Форма собственности', choices=choice,max_length=30)
 
     class Meta:
@@ -124,31 +116,21 @@ class Industry(models.Model):
 
 
 class Support(models.Model):
-    recipient_choice = (
-        ('small', 'Малый (1-100 чел.)'),
-        ('medium', 'Средний (100-250 чел.)'),
-        ('small_medium', 'Малый и средний (1-250 чел.)'),
-        ('big', "Крупный (от 251 чел.)"),
-        ('all', 'Все')
-    )
-    territory_choice = (
-        ('oez', 'ОЭЗ'),
-        ('park', 'индустриальный парк'),
-        ('mono', 'моногород'),
-        ('vne', 'территория вне'),
-        ('all', 'любая')
-    )
-    choice = (
-        ('direct', 'Прямая финансовая поддержка'),
-        ('loan', 'заемное финансирование')
-    )
     territory = models.CharField('Территория реализации проекта', choices=territory_choice, max_length=50, blank=True)
     recipient = models.CharField('Получатель', choices=recipient_choice, max_length=150)
     name = models.CharField('Имя поддержки', max_length=500)
     condition = models.TextField('Условия', blank=True)
-    type = models.CharField('Тип поддержки', choices= choice, max_length=50)
+    type = models.CharField('Тип поддержки', choices=choice, max_length=50)
     organisation = models.TextField('кто выдает меру поддержки')
     industry = models.ManyToManyField(Industry, verbose_name='Отрасль')
+    implementation = models.CharField('Способ реализации проекта', choices=implementation_choice, max_length=50, blank=True)
+    type_project = models.CharField('Тип проекта', choices=type_project_choices, max_length=50, blank=True)
+    target = models.TextField('Цели/адресаты гос.поддержки', default=0, blank=True)
+    authority = models.CharField('Куррирующий орган', choices=authority_choices, max_length=50, blank=True)
+    project_name = models.TextField('Наименование национального проекта', blank=True, default=0)
+    program_name = models.TextField('Наименование гос.программы', default=0)
+    npa = models.TextField('НПА устанавливающий меры', default=0, blank=True)
+    money = models.CharField('Объем меры гос.поддержки(млрд.руб.)', max_length=150, blank=True)
     category = models.CharField('Категория налогоплатильщика', max_length=300, blank=True)
     property_rate = models.TextField('Налоговая ставка на имущество', blank=True)
     profit = models.TextField('Налог на прибыль', blank=True)
@@ -157,11 +139,8 @@ class Support(models.Model):
     nds = models.TextField('Налоговая ставка НДС', blank=True)
     summ = models.CharField('Сумма займа', max_length=50, blank=True)
     expenses = models.TextField('Затраты подлежащие возмещению', blank=True)
-    form_choice = (
-        ('lawyer', 'Юр.лицо'),
-        ('ip', 'ИП')
-    )
     form = models.CharField('Категория получателя', choices=form_choice, max_length=20, default=0, blank=True)
+
     class Meta:
         verbose_name = 'Мера поддержки'
         verbose_name_plural = 'Меры поддержки'
