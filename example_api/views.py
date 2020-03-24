@@ -11,7 +11,7 @@ class InformationView(ListAPIView):
     serializer_class = InformationSerializers
 
 class NewsView(ListAPIView):
-    queryset = News.objects.all()
+    queryset = News.objects.order_by('-id')[0:5]
     serializer_class = NewsSerializers
 
 class GreenfieldViews(ListAPIView):
