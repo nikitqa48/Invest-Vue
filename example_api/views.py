@@ -14,6 +14,10 @@ class NewsView(ListAPIView):
     queryset = News.objects.order_by('-id')[0:5]
     serializer_class = NewsSerializers
 
+class Allnews(ListAPIView):
+    queryset = News.objects.order_by('-id')
+    serializer_class = NewsSerializers
+
 class GreenfieldViews(ListAPIView):
     queryset = Greenfield.objects.all()
     serializer_class = GreenfieldSerializers
