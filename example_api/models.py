@@ -67,7 +67,7 @@ class News(models.Model):
     slug = models.SlugField(max_length=250,unique_for_date='publish', null=True)
     body = models.TextField('Текст')
     publish = models.DateTimeField("Опубликован",default=timezone.now)
-    created = models.DateTimeField("Создан",auto_now_add=True)
+    created = models.DateTimeField("Создан",default=timezone.now, blank = False, null = True)
     updated = models.DateTimeField("Обновлен",auto_now=True)
         
     def get_absolute_url(self):
