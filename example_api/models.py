@@ -4,23 +4,6 @@ from django.utils import timezone
 from django.urls import reverse
 from .choices import *
 
-class Profile(User):
-    GENDER = (
-    ('male', "Мужчина"),
-    ('female', 'Женщина'),
-    )
-    gender = models.CharField('Пол', choices=GENDER, max_length=6)
-    phone = models.CharField('Телефон',max_length=20)
-    address= models.CharField('Адрес', max_length=150)
-
-    class Meta:
-        verbose_name = 'Профиль'
-        verbose_name_plural = 'Профили'
-
-    def __str__(self):
-        return self.username
-
-
 class Connect(models.Model):
     created = models.DateTimeField('Дата обращения',auto_now_add=True, db_index=True,null=True)
     name = models.CharField('Имя', max_length=30)
@@ -49,21 +32,6 @@ class Region(models.Model):
         return self.name
 
 
-class InformationForRegion(models.Model):
-    region = models.ForeignKey(Region, on_delete=models.CASCADE)
-    power = models.CharField('Электроснабжение', max_length=20)
-    water = models.CharField('Водоснабжение', max_length=20)
-    gas = models.CharField('Газоснабжение', max_length=20)
-    heat = models.CharField('Теплоснабжение', max_length=20)
-    water_out = models.CharField('Теплоотведение', max_length=20)
-
-    class Meta:
-        verbose_name = 'Информация о районе'
-        verbose_name_plural = 'Информация о районах'
-
-    def __str__(self):
-        return self.region.name
-
 
 class News(models.Model):
     title = models.CharField('Заголовок', max_length=100)
@@ -88,12 +56,23 @@ class News(models.Model):
 
 
 class Greenfield(models.Model):
-    region = models.ForeignKey(Region, on_delete=models.CASCADE)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, verbose_name='Район')
     number = models.CharField('Кадастровый номер', max_length=50)
     type = models.CharField('Тип участка', choices=choice_type, max_length=20, default=0)
-    image = models.ImageField(upload_to='greenfield',height_field=None,width_field=None,null=True)
+    image = models.ImageField(upload_to='greenfield',height_field=None,width_field=None,null=True, verbose_name= 'Фотография участка')
     square = models.CharField('Площадь(га)', max_length=10)
     form = models.CharField('Форма собственности', choices=private_choice,max_length=30)
+    power = models.CharField('Электроснабжение', max_length=500, blank=True)
+    water = models.CharField('Водоснабжение', max_length=500, blank=True)
+    gas = models.CharField('Газоснабжение', max_length=500, blank=True)
+    heat = models.CharField('Теплоснабжение', max_length=500, blank=True)
+    water_out = models.CharField('Теплоотведение', max_length=500, blank=True)
+    description = models.TextField('Описание участка', blank=True)
+    danger = models.CharField('Класс опасности', max_length=500, choices=danger_choices, default='1')
+    privileges = models.TextField('Льготы', blank=True)
+    category = models.CharField('Категория замель', max_length=50, choices=category_choices, default='0')
+    desired = models.CharField('Форма владения', max_length=50, choices=desired_choices, default='buy')    
+
 
     class Meta:
         ordering = ('number',)

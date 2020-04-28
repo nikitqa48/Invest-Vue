@@ -1,10 +1,7 @@
 from django.contrib import admin
 from .models import *
 # Register your models here.
-@admin.register(Profile)
 
-class AdminProfile(admin.ModelAdmin):
-    list_display = ['first_name', 'gender', 'username','email','phone']
 
 @admin.register(Connect)
 
@@ -19,10 +16,6 @@ class RegionAdmin(admin.ModelAdmin):
     list_display = ['name','id']
     list_filter = ['name']
 
-@admin.register(InformationForRegion)
-
-class InformationForRegion(admin.ModelAdmin):
-    list_display = ['region','power', 'water', 'gas', 'heat', 'water_out']
 
 @admin.register(News)
 

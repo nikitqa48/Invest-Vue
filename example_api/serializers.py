@@ -6,10 +6,7 @@ class ConnectSerializers(ModelSerializer):
         model = Connect
         fields = [ 'email', 'phone', 'name', 'surname', 'middle_name', 'organisation']
 
-class InformationSerializers(ModelSerializer):
-    class Meta:
-        model = InformationForRegion
-        fields = ['region', 'power','water','gas', 'heat','water_out']
+
 
 class NewsSerializers(ModelSerializer):
     class Meta:
@@ -19,6 +16,7 @@ class NewsSerializers(ModelSerializer):
 class GreenfieldSerializers(ModelSerializer):
     class Meta:
         model = Greenfield
+        fields = ['image','square','form','region','number', 'type', 'power', 'water', 'gas', 'heat', 'water_out', 'description', 'danger', 'privileges', 'category', 'desired']
         fields = ['image','square','form','region','number', 'type']
 
 
