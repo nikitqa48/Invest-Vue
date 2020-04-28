@@ -41,3 +41,14 @@ class GreenfieldAdmin(admin.ModelAdmin):
     list_filter = ['region', 'form']
     search_fields = ['number','square']
     ordering = ['region']
+
+
+@admin.register(Support)
+
+class SupportAdmin(admin.ModelAdmin):
+    list_display = ['name']
+
+@admin.register(Industry)
+
+class IndustryAdmin(admin.ModelAdmin):
+    list_display = ['name']

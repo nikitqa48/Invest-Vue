@@ -1,13 +1,13 @@
-from django.conf.urls import include
 from django.urls import path
 from .views import *
-from rest_framework.routers import SimpleRouter, DefaultRouter
-router = SimpleRouter()
-router.register('',ProfileListView)
 
 urlpatterns = [
-  path('inform/', inform_list),
-  path('news/', news_list),
-  path('greenfield/',green_list)
+  path('', ConnectListView.as_view()),
+  path('inform/', InformationView.as_view()),
+  path('news/', NewsView.as_view()),
+  path('greenfield/', GreenfieldViews.as_view()),
+  path('support/', SupportView.as_view()),
+  path('news/detail/<slug:pk>', DetailNews.as_view()),
+  path('all_news/', Allnews.as_view()),
+  path('support/detail/<int:pk>', DetailSupport.as_view())
 ]
-urlpatterns += router.urls

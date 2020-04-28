@@ -24,13 +24,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'example_api',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'django_filters'
+
 ]
 ALLOWED_HOSTS = ['*']
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES' : 
-    ( 'rest_framework.authentication.BasicAuthentication' , 'rest_framework.authentication.SessionAuthentication' , )
+    ('rest_framework.authentication.BasicAuthentication' , 'rest_framework.authentication.SessionAuthentication', ),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
     } 
 
 
