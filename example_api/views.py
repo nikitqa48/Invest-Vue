@@ -6,10 +6,6 @@ from django_filters.rest_framework import DjangoFilterBackend
 class ConnectListView(CreateAPIView):
     serializer_class = ConnectSerializers
 
-class InformationView(ListAPIView):
-    queryset = InformationForRegion.objects.all()
-    serializer_class = InformationSerializers
-
 class NewsView(ListAPIView):
     queryset = News.objects.order_by('-id')[0:5]
     serializer_class = NewsSerializers
