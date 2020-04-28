@@ -19,7 +19,7 @@ class NewsSerializers(ModelSerializer):
 class GreenfieldSerializers(ModelSerializer):
     class Meta:
         model = Greenfield
-        fields = ['image','square','form','region','number']
+        fields = ['image','square','form','region','number', 'type']
 
 
 class IndustrySerializers(ModelSerializer):

@@ -93,7 +93,7 @@ class Greenfield(models.Model):
     type = models.CharField('Тип участка', choices=choice_type, max_length=20, default=0)
     image = models.ImageField(upload_to='greenfield',height_field=None,width_field=None,null=True)
     square = models.CharField('Площадь(га)', max_length=10)
-    form = models.CharField('Форма собственности', choices=choice,max_length=30)
+    form = models.CharField('Форма собственности', choices=private_choice,max_length=30)
 
     class Meta:
         ordering = ('number',)

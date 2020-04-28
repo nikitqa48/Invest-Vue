@@ -2,7 +2,7 @@ choice_type = (
     ('greenfield', 'Гринфилд'),
     ('brownfield', 'Браунфилд')
 )
-choice = (
+private_choice = (
     ('goverment', 'государственная'),
     ('private', 'частная')
 )
