@@ -17,8 +17,6 @@ class GreenfieldSerializers(ModelSerializer):
     class Meta:
         model = Greenfield
         fields = ['image','square','form','region','number', 'type', 'power', 'water', 'gas', 'heat', 'water_out', 'description', 'danger', 'privileges', 'category', 'desired']
-        fields = ['image','square','form','region','number', 'type']
-
 
 class IndustrySerializers(ModelSerializer):
     class Meta:
