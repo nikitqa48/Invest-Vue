@@ -69,6 +69,7 @@ authority_choices = (
     ('rvk', 'АО "РВК"'),
     ('business', 'Центры "мой бизнес", Управляющие компании')
 )
+<<<<<<< HEAD
 danger_choices = (
     ('1', '1'),
     ('2', '2'),
@@ -97,3 +98,5 @@ desired_choices = (
     ('arend', 'Аренда'),
     ('buy', 'Выкуп')
 )
+=======
+>>>>>>> cd5b8ebc51a21eacc7abc53b7c9adc414938086e

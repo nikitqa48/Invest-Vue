@@ -73,6 +73,7 @@ class Greenfield(models.Model):
     category = models.CharField('Категория замель', max_length=50, choices=category_choices, default='0')
     desired = models.CharField('Форма владения', max_length=50, choices=desired_choices, default='buy')    
 
+
     class Meta:
         ordering = ('number',)
         verbose_name = 'Земельный участок'
