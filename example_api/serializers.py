@@ -16,11 +16,8 @@ class NewsSerializers(ModelSerializer):
 class GreenfieldSerializers(ModelSerializer):
     class Meta:
         model = Greenfield
-<<<<<<< HEAD
         fields = ['image','square','form','region','number', 'type', 'power', 'water', 'gas', 'heat', 'water_out', 'description', 'danger', 'privileges', 'category', 'desired']
-=======
         fields = ['image','square','form','region','number', 'type']
->>>>>>> cd5b8ebc51a21eacc7abc53b7c9adc414938086e
 
 
 class IndustrySerializers(ModelSerializer):
