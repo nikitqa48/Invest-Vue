@@ -56,6 +56,8 @@ class News(models.Model):
 
 
 class Greenfield(models.Model):
+    territory = models.CharField('Территория участка', choices=greenfield_choice, max_length=50,)
+    number_territory = models.CharField('Номер участка', max_length=100, default='')
     region = models.ForeignKey(Region, on_delete=models.CASCADE, verbose_name='Район')
     number = models.CharField('Кадастровый номер', max_length=50)
     type = models.CharField('Тип участка', choices=choice_type, max_length=20, default=0)
@@ -69,9 +71,10 @@ class Greenfield(models.Model):
     water_out = models.CharField('Теплоотведение', max_length=500, blank=True)
     description = models.TextField('Описание участка', blank=True)
     danger = models.CharField('Класс опасности', max_length=500, choices=danger_choices, default='1')
-    privileges = models.TextField('Льготы', blank=True)
     category = models.CharField('Категория замель', max_length=50, choices=category_choices, default='0')
-    desired = models.CharField('Форма владения', max_length=50, choices=desired_choices, default='buy')    
+    desired = models.CharField('Форма владения', max_length=50, choices=desired_choices, default='buy')
+    customs_priveleges = models.CharField('Таможенные льготы', max_length=100, default='', blank=True)
+    territory_priveleges = models.CharField('Льготная стоимость земли', max_length=100, default='', blank=True)
 
 
     class Meta:
@@ -101,7 +104,7 @@ class Support(models.Model):
     condition = models.TextField('Условия', blank=True)
     type = models.CharField('Тип поддержки', choices=choice, max_length=50)
     organisation = models.TextField('кто выдает меру поддержки')
-    industry = models.ManyToManyField(Industry, verbose_name='Отрасль')
+    industry = models.ManyToManyField(Industry, verbose_name='Отрасль', null= False)
     implementation = models.CharField('Способ реализации проекта', choices=implementation_choice, max_length=50, blank=True)
     type_project = models.CharField('Тип проекта', choices=type_project_choices, max_length=50, blank=True)
     target = models.TextField('Цели/адресаты гос.поддержки', default=0, blank=True)

@@ -16,6 +16,8 @@ class Allnews(ListAPIView):
 
 class GreenfieldViews(ListAPIView):
     queryset = Greenfield.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['type']
     serializer_class = GreenfieldSerializers
 
 
