@@ -27,6 +27,7 @@ class IndustrySerializers(ModelSerializer):
 
 class SupportSerializers(ModelSerializer):
     industry = StringRelatedField(many=True)
+    type_project = StringRelatedField(many=True)
     class Meta:
         model = Support
         fields = ['id', 'recipient', 'name', 'type','form',

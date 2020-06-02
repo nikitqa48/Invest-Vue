@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import *
-# Register your models here.
+from django import  forms
 
 
 @admin.register(Connect)
@@ -45,3 +45,4 @@ class SupportAdmin(admin.ModelAdmin):
 
 class IndustryAdmin(admin.ModelAdmin):
     list_display = ['name']
+
