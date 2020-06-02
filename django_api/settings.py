@@ -25,7 +25,8 @@ INSTALLED_APPS = [
     'example_api',
     'rest_framework',
     'corsheaders',
-    'django_filters'
+    'django_filters',
+    'multiselectfield'
 
 ]
 ALLOWED_HOSTS = ['*']

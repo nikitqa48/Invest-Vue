@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.urls import reverse
 from .choices import *
 
+
 class Connect(models.Model):
     created = models.DateTimeField('Дата обращения',auto_now_add=True, db_index=True,null=True)
     name = models.CharField('Имя', max_length=30)
@@ -96,17 +97,24 @@ class Industry(models.Model):
     def __str__(self):
         return self.name
 
+class TypeProject(models.Model):
+    description = models.CharField('Тип проекта', max_length=100)
+
+    class Neta:
+        verbose_name = 'Тип проекта'
+    def __str__(self):
+        return self.description
 
 class Support(models.Model):
     territory = models.CharField('Территория реализации проекта', choices=territory_choice, max_length=50, blank=True)
     recipient = models.CharField('Получатель', choices=recipient_choice, max_length=150)
     name = models.CharField('Имя поддержки', max_length=500)
     condition = models.TextField('Условия', blank=True)
-    type = models.CharField('Тип поддержки', choices=choice, max_length=50)
+    type = models.CharField('Вид поддержки', choices=choice, max_length=50)
     organisation = models.TextField('кто выдает меру поддержки')
     industry = models.ManyToManyField(Industry, verbose_name='Отрасль', null= False)
     implementation = models.CharField('Способ реализации проекта', choices=implementation_choice, max_length=50, blank=True)
-    type_project = models.CharField('Тип проекта', choices=type_project_choices, max_length=50, blank=True)
+    type_project = models.ManyToManyField(TypeProject, blank=True, verbose_name='Тип проекта')
     target = models.TextField('Цели/адресаты гос.поддержки', default=0, blank=True)
     authority = models.CharField('Куррирующий орган', choices=authority_choices, max_length=50, blank=True)
     project_name = models.TextField('Наименование национального проекта', blank=True, default=0)
