@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
 from .choices import *
+from django.conf import settings
 
 
 class Connect(models.Model):
@@ -138,3 +139,30 @@ class Support(models.Model):
 
     def __str__(self):
         return  self.name
+
+class Document(models.Model):
+    name = models.CharField('Название документа', max_length=150)
+    url = models.CharField('УРЛ', max_length=50,default='')
+    file = models.FileField(upload_to='Documents', null=True)
+
+
+class Project(models.Model):
+    industry = models.ForeignKey(Industry, on_delete=models.CASCADE, null=True)
+    name = models.CharField('Наименование проекта', max_length=100)
+    time = models.DateField('Сроки реализации')
+    sum = models.IntegerField('Сумма инвестиций(млн.руб)', max_length=200)
+    now = models.TextField('Текущее состояние проекта')
+    image = models.ImageField(upload_to='Project', height_field=None, width_field=None, null=True,
+                              verbose_name='Фотография проекта')
+
+    class Meta:
+        verbose_name = 'Проект'
+        verbose_name_plural = 'Проекты'
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return '{0}{1}'.format(settings.MEDIA_URL, self.image.url)
+
+

@@ -26,7 +26,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'django_filters',
-    'multiselectfield'
+    'multiselectfield',
+    'ckeditor'
 
 ]
 ALLOWED_HOSTS = ['*']
@@ -120,9 +121,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = [
-#      os.path.join(BASE_DIR, 'static')
-#  ]
+STATIC_DIR = os.path.join('static')
+STATICFILES_DIRS = [
+      os.path.join(BASE_DIR, 'static')
+  ]
 CORS_ORIGIN_ALLOW_ALL = True
 # STATIC_ROOT = os.path.join('static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
