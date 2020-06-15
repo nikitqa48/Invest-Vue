@@ -1,5 +1,7 @@
 from rest_framework.serializers import ModelSerializer, StringRelatedField
+from rest_framework import serializers
 from .models import *
+
 class ConnectSerializers(ModelSerializer):
     class Meta:
         model = Connect
@@ -36,4 +38,13 @@ class SupportSerializers(ModelSerializer):
                 'land', 'nds', 'expenses', 'condition', 'territory',
                 'implementation', 'type_project', 'target', 'authority',
                 'project_name', 'program_name', 'npa', 'money', 'summ', 'loan_time']
+
+
+class ProjectSerializer(ModelSerializer):
+    industry = StringRelatedField()
+    class Meta:
+        model = Project
+        fields = ['image','industry', 'name', 'time', 'sum', 'now']
+
+
 

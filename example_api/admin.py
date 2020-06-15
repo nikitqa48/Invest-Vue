@@ -4,21 +4,19 @@ from django import  forms
 
 
 @admin.register(Connect)
-
 class ConnectAdmin(admin.ModelAdmin):
     list_display = ['name','surname','middle_name','email','phone','organisation','created']
     list_filter = ['organisation']
     search_fields = ['email','phone', 'organisation']
 
-@admin.register(Region)
 
+@admin.register(Region)
 class RegionAdmin(admin.ModelAdmin):
     list_display = ['name','id']
     list_filter = ['name']
 
 
 @admin.register(News)
-
 class NewsAdmin(admin.ModelAdmin):
     list_display = ['title','body','publish','created','updated','id']
     list_filter = ('created', 'publish')
@@ -27,8 +25,8 @@ class NewsAdmin(admin.ModelAdmin):
     date_hierarchy = 'publish'
     ordering = ['publish']
 
-@admin.register(Greenfield)
 
+@admin.register(Greenfield)
 class GreenfieldAdmin(admin.ModelAdmin):
     list_display = ['number','square','region','form','image']
     list_filter = ['region', 'form']
@@ -37,16 +35,25 @@ class GreenfieldAdmin(admin.ModelAdmin):
 
 
 @admin.register(Support)
-
 class SupportAdmin(admin.ModelAdmin):
     list_display = ['name']
 
-@admin.register(Industry)
 
+@admin.register(Industry)
 class IndustryAdmin(admin.ModelAdmin):
+    list_display = ['name', 'id']
+
+@admin.register(Document)
+class AdminDocument(admin.ModelAdmin):
     list_display = ['name']
 
+<<<<<<< HEAD
 @admin.register(TypeProject)
 
 class AdminTypeProject(admin.ModelAdmin):
     list_display = ['description']
+=======
+@admin.register(Project)
+class AdminProject(admin.ModelAdmin):
+    list_display = ['name', 'image', 'industry', 'sum', 'time']
+>>>>>>> 5dc7416bc1ccf43614a48f4dc0727f906ad4277c
