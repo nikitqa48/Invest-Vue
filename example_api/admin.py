@@ -46,3 +46,7 @@ class SupportAdmin(admin.ModelAdmin):
 class IndustryAdmin(admin.ModelAdmin):
     list_display = ['name']
 
+@admin.register(TypeProject)
+
+class AdminTypeProject(admin.ModelAdmin):
+    list_display = ['description']
