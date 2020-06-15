@@ -118,9 +118,9 @@ class Support(models.Model):
     type_project = models.ManyToManyField(TypeProject, blank=True, verbose_name='Тип проекта')
     target = models.TextField('Цели/адресаты гос.поддержки', default=0, blank=True)
     authority = models.CharField('Куррирующий орган', choices=authority_choices, max_length=50, blank=True)
-    project_name = models.TextField('Наименование национального проекта', blank=True, default=0)
-    program_name = models.TextField('Наименование гос.программы', default=0)
-    npa = models.TextField('НПА устанавливающий меры', default=0, blank=True)
+    project_name = models.TextField('Наименование национального проекта', blank=True, default='')
+    program_name = models.TextField('Наименование гос.программы', default='')
+    npa = models.TextField('НПА устанавливающий меры', default='', blank=True)
     money = models.CharField('Объем меры гос.поддержки(млн.руб.)', max_length=150, blank=True)
     loan_time = models.CharField('Сроки займа', max_length=150, blank=True, default=0)
     category = models.CharField('Категория налогоплатильщика', max_length=300, blank=True)
@@ -131,7 +131,7 @@ class Support(models.Model):
     nds = models.TextField('Налоговая ставка НДС', blank=True)
     summ = models.CharField('Сумма займа', max_length=50, blank=True)
     expenses = models.TextField('Затраты подлежащие возмещению', blank=True)
-    form = models.CharField('Категория получателя', choices=form_choice, max_length=20, default=0, blank=True)
+    form = models.CharField('Категория получателя', choices=form_choice, max_length=20, default='', blank=True)
 
     class Meta:
         verbose_name = 'Мера поддержки'
@@ -142,7 +142,6 @@ class Support(models.Model):
 
 class Document(models.Model):
     name = models.CharField('Название документа', max_length=150)
-    url = models.CharField('УРЛ', max_length=50,default='')
     file = models.FileField(upload_to='Documents', null=True)
 
 
@@ -150,7 +149,7 @@ class Project(models.Model):
     industry = models.ForeignKey(Industry, on_delete=models.CASCADE, null=True)
     name = models.CharField('Наименование проекта', max_length=100)
     time = models.DateField('Сроки реализации')
-    sum = models.IntegerField('Сумма инвестиций(млн.руб)', max_length=200)
+    sum = models.IntegerField('Сумма инвестиций(млн.руб)')
     now = models.TextField('Текущее состояние проекта')
     image = models.ImageField(upload_to='Project', height_field=None, width_field=None, null=True,
                               verbose_name='Фотография проекта')

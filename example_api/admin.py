@@ -47,13 +47,13 @@ class IndustryAdmin(admin.ModelAdmin):
 class AdminDocument(admin.ModelAdmin):
     list_display = ['name']
 
-<<<<<<< HEAD
+
 @admin.register(TypeProject)
 
 class AdminTypeProject(admin.ModelAdmin):
     list_display = ['description']
-=======
+
 @admin.register(Project)
 class AdminProject(admin.ModelAdmin):
     list_display = ['name', 'image', 'industry', 'sum', 'time']
->>>>>>> 5dc7416bc1ccf43614a48f4dc0727f906ad4277c
+
