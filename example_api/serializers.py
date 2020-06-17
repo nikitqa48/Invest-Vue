@@ -15,6 +15,7 @@ class NewsSerializers(ModelSerializer):
         fields = ['title','body','publish','created','updated','id','image', 'slug']
 
 class GreenfieldSerializers(ModelSerializer):
+    form = StringRelatedField(many=True)
     class Meta:
         model = Greenfield
         fields = ['image','square','form','region','number', 'type', 'power', 'water', 'gas',
@@ -44,7 +45,7 @@ class ProjectSerializer(ModelSerializer):
     industry = StringRelatedField()
     class Meta:
         model = Project
-        fields = ['image','industry', 'name', 'time', 'sum', 'now']
+        fields = ['image','industry', 'name',  'sum', 'now', 'body', 'start', 'finish']
 
 
 
