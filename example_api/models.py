@@ -165,7 +165,7 @@ class Project(models.Model):
     name = models.CharField('Наименование проекта', max_length=100)
     start = models.IntegerField('Начало реализации проекта', null=True)
     finish = models.IntegerField('Конец реализации проекта', null=True)
-    body = models.TextField('Описание проекта проекта', null=True, blank=True)
+    body = models.TextField('Описание проекта', null=True, blank=True)
     sum = models.IntegerField('Сумма инвестиций(млн.руб)')
     now = models.TextField('Текущее состояние проекта')
     image = models.ImageField(upload_to='Project', height_field=None, width_field=None, null=True,
