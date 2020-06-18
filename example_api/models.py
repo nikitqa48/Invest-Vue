@@ -148,7 +148,7 @@ class Document(models.Model):
 class Project(models.Model):
     industry = models.ForeignKey(Industry, on_delete=models.CASCADE, null=True)
     name = models.CharField('Наименование проекта', max_length=100)
-    time = models.DateField('Сроки реализации')
+    time = models.DateField('Сроки реализации', blank=True)
     sum = models.IntegerField('Сумма инвестиций(млн.руб)')
     now = models.TextField('Текущее состояние проекта')
     image = models.ImageField(upload_to='Project', height_field=None, width_field=None, null=True,
