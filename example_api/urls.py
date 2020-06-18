@@ -11,7 +11,11 @@ urlpatterns = [
   path('all_news/', Allnews.as_view()),
   path('support/detail/<int:pk>', DetailSupport.as_view()),
   path('document/<int:pk>', DocumentView.as_view()),
-  path('project/<int:min>/<int:max>', FilterProject.as_view()),
-  path('project/<int:min>/<int:max>/<int:industry>', FilterProject.as_view()),
-  path('project/', ProjectView.as_view())
+  path('project/<int:number>/', FilterProject.as_view()),
+  path('project/<int:number>/<int:industry>/<int:year>', FilterProject.as_view()),
+  path('project/<int:number>/<int:industry>', FilterProject.as_view()),
+  path('summyear/<int:sum>/<int:year>',SumYear.as_view()),
+  path('project/', ProjectView.as_view()),
+  path('searchyear/<int:year>', SearchYearView.as_view()),
+  path('searchyear/<int:year>/<int:industry>', SearchYearView.as_view())
 ]

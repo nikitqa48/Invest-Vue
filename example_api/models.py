@@ -56,8 +56,18 @@ class News(models.Model):
     def __str__(self):
         return self.title
 
+class PrivateForm(models.Model):
+    title = models.CharField('Форма собственности', max_length=150)
+
+    class Meta:
+        verbose_name = 'Форма собственности'
+        verbose_name_plural = 'Форма собственности'
+
+    def __str__(self):
+        return self.title
 
 class Greenfield(models.Model):
+    ''' Модель участка '''
     territory = models.CharField('Территория участка', choices=greenfield_choice, max_length=50,)
     number_territory = models.CharField('Номер участка', max_length=100, default='')
     region = models.ForeignKey(Region, on_delete=models.CASCADE, verbose_name='Район')
@@ -65,18 +75,19 @@ class Greenfield(models.Model):
     type = models.CharField('Тип участка', choices=choice_type, max_length=20, default=0)
     image = models.ImageField(upload_to='greenfield',height_field=None,width_field=None,null=True, verbose_name= 'Фотография участка')
     square = models.CharField('Площадь(га)', max_length=10)
-    form = models.CharField('Форма собственности', choices=private_choice,max_length=30)
-    power = models.CharField('Электроснабжение', max_length=500, blank=True)
-    water = models.CharField('Водоснабжение', max_length=500, blank=True)
-    gas = models.CharField('Газоснабжение', max_length=500, blank=True)
-    heat = models.CharField('Теплоснабжение', max_length=500, blank=True)
-    water_out = models.CharField('Теплоотведение', max_length=500, blank=True)
-    description = models.TextField('Описание участка', blank=True)
+    form = models.ManyToManyField(PrivateForm, verbose_name="Форма владения")
+    power = models.CharField('Электроснабжение', max_length=500, blank=True, null=True)
+    water = models.CharField('Водоснабжение', max_length=500, blank=True, null=True)
+    gas = models.CharField('Газоснабжение', max_length=500, blank=True, null=True)
+    heat = models.CharField('Теплоснабжение', max_length=500, blank=True, null=True)
+    water_out = models.CharField('Водоотведение', max_length=500, blank=True, null=True)
+    description = models.TextField('Описание участка', blank=True, null=True)
     danger = models.CharField('Класс опасности', max_length=500, choices=danger_choices, default='1')
     category = models.CharField('Категория замель', max_length=50, choices=category_choices, default='0')
     desired = models.CharField('Форма владения', max_length=50, choices=desired_choices, default='buy')
-    customs_priveleges = models.CharField('Таможенные льготы', max_length=100, default='', blank=True)
-    territory_priveleges = models.CharField('Льготная стоимость земли', max_length=100, default='', blank=True)
+    customs_priveleges = models.CharField('Таможенные льготы', max_length=100, default='', blank=True, null=True)
+    territory_priveleges = models.CharField('Льготная стоимость земли', max_length=100, default='', null=True, blank=True)
+    nalog = models.TextField('Налоговые льготы', blank=True, null=True)
 
 
     class Meta:
@@ -90,7 +101,7 @@ class Greenfield(models.Model):
 
 class Industry(models.Model):
     name = models.CharField('Название отрасли', max_length=100)
-
+    slug = models.SlugField('Адрес', max_length=250, null=True, unique=True)
     class Meta:
         verbose_name = 'Отрасль'
         verbose_name_plural = 'Отрасли'
@@ -113,7 +124,7 @@ class Support(models.Model):
     condition = models.TextField('Условия', blank=True)
     type = models.CharField('Вид поддержки', choices=choice, max_length=50)
     organisation = models.TextField('кто выдает меру поддержки')
-    industry = models.ManyToManyField(Industry, verbose_name='Отрасль', null= False)
+    industry = models.ManyToManyField(Industry, verbose_name='Отрасль')
     implementation = models.CharField('Способ реализации проекта', choices=implementation_choice, max_length=50, blank=True)
     type_project = models.ManyToManyField(TypeProject, blank=True, verbose_name='Тип проекта')
     target = models.TextField('Цели/адресаты гос.поддержки', default=0, blank=True)
@@ -129,10 +140,15 @@ class Support(models.Model):
     transport = models.TextField('Налоговая ставка по транспортному налогу', blank=True)
     land = models.TextField('Налоговая ставка по земельному налогу', blank=True)
     nds = models.TextField('Налоговая ставка НДС', blank=True)
-    summ = models.CharField('Сумма займа', max_length=50, blank=True)
+    summ = models.CharField('Сумма займа', max_length=50, blank=True, null=True)
     expenses = models.TextField('Затраты подлежащие возмещению', blank=True)
+<<<<<<< HEAD
     form = models.CharField('Категория получателя', choices=form_choice, max_length=20, default='', blank=True)
 
+=======
+    form = models.CharField('Категория получателя', choices=form_choice, max_length=20, default=0, blank=True, null=True)
+    nalog = models.TextField('Налоговые льготы', null=True, blank=True)
+>>>>>>> 6d8dc22870b8b9d3ef1dcf4c976b883d681cc23f
     class Meta:
         verbose_name = 'Мера поддержки'
         verbose_name_plural = 'Меры поддержки'
@@ -144,11 +160,20 @@ class Document(models.Model):
     name = models.CharField('Название документа', max_length=150)
     file = models.FileField(upload_to='Documents', null=True)
 
+    class Meta:
+        verbose_name = 'Документ'
+        verbose_name_plural = 'Документы'
 
 class Project(models.Model):
-    industry = models.ForeignKey(Industry, on_delete=models.CASCADE, null=True)
+    industry = models.ForeignKey(Industry, on_delete=models.CASCADE, null=True, verbose_name='Отрасль')
     name = models.CharField('Наименование проекта', max_length=100)
+<<<<<<< HEAD
     time = models.DateField('Сроки реализации', blank=True)
+=======
+    start = models.IntegerField('Начало реализации проекта', null=True)
+    finish = models.IntegerField('Конец реализации проекта', null=True)
+    body = models.TextField('Описание проекта', null=True, blank=True)
+>>>>>>> 6d8dc22870b8b9d3ef1dcf4c976b883d681cc23f
     sum = models.IntegerField('Сумма инвестиций(млн.руб)')
     now = models.TextField('Текущее состояние проекта')
     image = models.ImageField(upload_to='Project', height_field=None, width_field=None, null=True,

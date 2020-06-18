@@ -55,5 +55,17 @@ class AdminTypeProject(admin.ModelAdmin):
 
 @admin.register(Project)
 class AdminProject(admin.ModelAdmin):
+<<<<<<< HEAD
     list_display = ['name', 'image', 'industry', 'sum', 'time']
 
+=======
+    list_display = ['name', 'image', 'industry', 'sum', 'start', 'finish', 'body', 'now']
+
+@admin.register(TypeProject)
+class AdminTypeProject(admin.ModelAdmin):
+    list_display = ['description']
+
+@admin.register(PrivateForm)
+class AdminTypeProject(admin.ModelAdmin):
+    list_display = ['title']
+>>>>>>> 6d8dc22870b8b9d3ef1dcf4c976b883d681cc23f

@@ -51,15 +51,31 @@ class ProjectView(ListAPIView):
     queryset =  Project.objects.all()
     serializer_class = ProjectSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['sum', 'industry', 'time']
 
 class FilterProject(APIView):
-    def get(self, request, min, max, industry=None):
-        if industry:
-            project = Project.objects.filter(sum__range=[min, max], industry=industry)
+    def get(self, request, number, industry=None, year=None):
+        if year:
+            print(Project.objects.filter(industry__name='промышленность'))
+            project = Project.objects.filter(sum__lte=number, industry=industry).filter(start__lte=year ,finish__gte=year)
+        elif industry:
+            project = Project.objects.filter(sum__lte=number, industry=industry)
         else:
-            project = Project.objects.filter(sum__range=[min, max])
+            project = Project.objects.filter(sum__lte=number)
         serializer = ProjectSerializer(project, many=True, context={"request":request})
         # text = News.objects.filter(body__contains=pk)
         return Response(serializer.data)
 
+class SearchYearView(APIView):
+    def get(self, request, year, industry=None):
+        if industry:
+            project = Project.objects.filter(start__lte=year, finish__gte=year, industry=industry)
+        else:
+            project = Project.objects.filter(start__lte=year, finish__gte=year)
+        serializers = ProjectSerializer(project, many=True, context={'request':request})
+        return Response(serializers.data)
+
+class SumYear(APIView):
+    def get(self,request, sum, year):
+        project = Project.objects.filter(sum__lte=sum,start__lte=year, finish__gte=year, )
+        serializers = ProjectSerializer(project, many=True, context={'request': request})
+        return Response(serializers.data)
