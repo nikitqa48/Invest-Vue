@@ -142,13 +142,9 @@ class Support(models.Model):
     nds = models.TextField('Налоговая ставка НДС', blank=True)
     summ = models.CharField('Сумма займа', max_length=50, blank=True, null=True)
     expenses = models.TextField('Затраты подлежащие возмещению', blank=True)
-<<<<<<< HEAD
     form = models.CharField('Категория получателя', choices=form_choice, max_length=20, default='', blank=True)
-
-=======
-    form = models.CharField('Категория получателя', choices=form_choice, max_length=20, default=0, blank=True, null=True)
     nalog = models.TextField('Налоговые льготы', null=True, blank=True)
->>>>>>> 6d8dc22870b8b9d3ef1dcf4c976b883d681cc23f
+
     class Meta:
         verbose_name = 'Мера поддержки'
         verbose_name_plural = 'Меры поддержки'
@@ -167,13 +163,9 @@ class Document(models.Model):
 class Project(models.Model):
     industry = models.ForeignKey(Industry, on_delete=models.CASCADE, null=True, verbose_name='Отрасль')
     name = models.CharField('Наименование проекта', max_length=100)
-<<<<<<< HEAD
-    time = models.DateField('Сроки реализации', blank=True)
-=======
     start = models.IntegerField('Начало реализации проекта', null=True)
     finish = models.IntegerField('Конец реализации проекта', null=True)
     body = models.TextField('Описание проекта', null=True, blank=True)
->>>>>>> 6d8dc22870b8b9d3ef1dcf4c976b883d681cc23f
     sum = models.IntegerField('Сумма инвестиций(млн.руб)')
     now = models.TextField('Текущее состояние проекта')
     image = models.ImageField(upload_to='Project', height_field=None, width_field=None, null=True,
