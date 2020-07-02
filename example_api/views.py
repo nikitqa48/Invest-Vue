@@ -80,4 +80,6 @@ class SumYear(APIView):
         serializers = ProjectSerializer(project, many=True, context={'request': request})
         return Response(serializers.data)
 
-
+class ContactListView(ListAPIView):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer

@@ -16,6 +16,7 @@ urlpatterns = [
   path('project/<int:number>/<int:industry>', FilterProject.as_view()),
   path('summyear/<int:sum>/<int:year>',SumYear.as_view()),
   path('project/', ProjectView.as_view()),
+  path('contacts/', ContactListView.as_view()),
   path('searchyear/<int:year>', SearchYearView.as_view()),
   path('searchyear/<int:year>/<int:industry>', SearchYearView.as_view())
 ]

@@ -20,7 +20,7 @@ class GreenfieldSerializers(ModelSerializer):
         model = Greenfield
         fields = ['image','square','form','region','number', 'type', 'power', 'water', 'gas',
                   'heat', 'water_out', 'description', 'danger', 'category',
-                  'desired', 'territory', 'number_territory', 'customs_priveleges', 'territory_priveleges', 'nalog']
+                  'desired', 'territory', 'number_territory', 'customs_priveleges', 'territory_priveleges']
 
 class IndustrySerializers(ModelSerializer):
     class Meta:
@@ -47,5 +47,8 @@ class ProjectSerializer(ModelSerializer):
         model = Project
         fields = ['image','industry', 'name',  'sum', 'now', 'body', 'start', 'finish']
 
-
+class ContactSerializer(ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = ['name', 'email', 'phone', 'position', 'image']
 

@@ -7,7 +7,7 @@ from django.conf import settings
 
 
 class Connect(models.Model):
-    created = models.DateTimeField('Дата обращения',auto_now_add=True, db_index=True,null=True)
+    created = models.DateTimeField('Дата обращения', auto_now_add=True, db_index=True, null=True)
     name = models.CharField('Имя', max_length=30)
     surname = models.CharField('Фамилия', max_length=30)
     middle_name = models.CharField('Отчество', max_length=40, null=True)
@@ -26,27 +26,27 @@ class Connect(models.Model):
 
 class Region(models.Model):
     name = models.CharField('Имя района', max_length=30)
+
     class Meta:
         verbose_name = 'Район'
         verbose_name_plural = 'Районы'
-        
+
     def __str__(self):
         return self.name
-
 
 
 class News(models.Model):
     title = models.CharField('Заголовок', max_length=100)
     image = models.ImageField(upload_to='News/img', height_field=None, width_field=None, null=True)
-    slug = models.SlugField(max_length=250,unique_for_date='publish', null=True)
+    slug = models.SlugField(max_length=250, unique_for_date='publish', null=True)
     body = models.TextField('Текст')
-    publish = models.DateTimeField("Опубликован",default=timezone.now)
-    created = models.DateTimeField("Создан",default=timezone.now, blank = False, null = True)
-    updated = models.DateTimeField("Обновлен",auto_now=True)
-        
+    publish = models.DateTimeField("Опубликован", default=timezone.now)
+    created = models.DateTimeField("Создан", default=timezone.now, blank=False, null=True)
+    updated = models.DateTimeField("Обновлен", auto_now=True)
+
     def get_absolute_url(self):
         return reverse('post_detail',
-                        args=[self.slug])
+                       args=[self.slug])
 
     class Meta:
         ordering = ('-publish',)
@@ -55,6 +55,7 @@ class News(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class PrivateForm(models.Model):
     title = models.CharField('Форма собственности', max_length=150)
@@ -66,14 +67,16 @@ class PrivateForm(models.Model):
     def __str__(self):
         return self.title
 
+
 class Greenfield(models.Model):
     ''' Модель участка '''
-    territory = models.CharField('Территория участка', choices=greenfield_choice, max_length=50,)
+    territory = models.CharField('Территория участка', choices=greenfield_choice, max_length=50, )
     number_territory = models.CharField('Номер участка', max_length=100, default='')
     region = models.ForeignKey(Region, on_delete=models.CASCADE, verbose_name='Район')
     number = models.CharField('Кадастровый номер', max_length=50)
     type = models.CharField('Тип участка', choices=choice_type, max_length=20, default=0)
-    image = models.ImageField(upload_to='greenfield',height_field=None,width_field=None,null=True, verbose_name= 'Фотография участка')
+    image = models.ImageField(upload_to='greenfield', height_field=None, width_field=None, null=True,
+                              verbose_name='Фотография участка')
     square = models.CharField('Площадь(га)', max_length=10)
     form = models.ManyToManyField(PrivateForm, verbose_name="Форма владения")
     power = models.CharField('Электроснабжение', max_length=500, blank=True, null=True)
@@ -86,9 +89,10 @@ class Greenfield(models.Model):
     category = models.CharField('Категория замель', max_length=50, choices=category_choices, default='0')
     desired = models.CharField('Форма владения', max_length=50, choices=desired_choices, default='buy')
     customs_priveleges = models.CharField('Таможенные льготы', max_length=100, default='', blank=True, null=True)
-    territory_priveleges = models.CharField('Льготная стоимость земли', max_length=100, default='', null=True, blank=True)
+    territory_priveleges = models.CharField('Льготная стоимость земли', max_length=100, default='', null=True,
+                                            blank=True)
     nalog = models.TextField('Налоговые льготы', blank=True, null=True)
-
+    private = models.CharField('Вид собственности', choices=private_choice, max_length=100, null=True)
 
     class Meta:
         ordering = ('number',)
@@ -102,6 +106,7 @@ class Greenfield(models.Model):
 class Industry(models.Model):
     name = models.CharField('Название отрасли', max_length=100)
     slug = models.SlugField('Адрес', max_length=250, null=True, unique=True)
+
     class Meta:
         verbose_name = 'Отрасль'
         verbose_name_plural = 'Отрасли'
@@ -109,13 +114,16 @@ class Industry(models.Model):
     def __str__(self):
         return self.name
 
+
 class TypeProject(models.Model):
     description = models.CharField('Тип проекта', max_length=100)
 
     class Neta:
         verbose_name = 'Тип проекта'
+
     def __str__(self):
         return self.description
+
 
 class Support(models.Model):
     territory = models.CharField('Территория реализации проекта', choices=territory_choice, max_length=50, blank=True)
@@ -123,15 +131,16 @@ class Support(models.Model):
     name = models.CharField('Имя поддержки', max_length=500)
     condition = models.TextField('Условия', blank=True)
     type = models.CharField('Вид поддержки', choices=choice, max_length=50)
-    organisation = models.TextField('кто выдает меру поддержки', blank=True)
+    organisation = models.TextField('кто выдает меру поддержки')
     industry = models.ManyToManyField(Industry, verbose_name='Отрасль')
-    implementation = models.CharField('Способ реализации проекта', choices=implementation_choice, max_length=50, blank=True)
+    implementation = models.CharField('Способ реализации проекта', choices=implementation_choice, max_length=50,
+                                      blank=True)
     type_project = models.ManyToManyField(TypeProject, blank=True, verbose_name='Тип проекта')
     target = models.TextField('Цели/адресаты гос.поддержки', default=0, blank=True)
     authority = models.CharField('Куррирующий орган', choices=authority_choices, max_length=50, blank=True)
-    project_name = models.TextField('Наименование национального проекта', blank=True, default='')
-    program_name = models.TextField('Наименование гос.программы', default='', blank=True)
-    npa = models.TextField('НПА устанавливающий меры', default='', blank=True)
+    project_name = models.TextField('Наименование национального проекта', blank=True, default=0)
+    program_name = models.TextField('Наименование гос.программы', default=0, blank=True)
+    npa = models.TextField('НПА устанавливающий меры', default=0, blank=True)
     money = models.CharField('Объем меры гос.поддержки(млн.руб.)', max_length=150, blank=True)
     loan_time = models.CharField('Сроки займа', max_length=150, blank=True, default=0)
     category = models.CharField('Категория налогоплатильщика', max_length=300, blank=True)
@@ -142,29 +151,35 @@ class Support(models.Model):
     nds = models.TextField('Налоговая ставка НДС', blank=True)
     summ = models.CharField('Сумма займа', max_length=50, blank=True, null=True)
     expenses = models.TextField('Затраты подлежащие возмещению', blank=True)
-    form = models.CharField('Категория получателя', choices=form_choice, max_length=20, default='', blank=True)
+    form = models.CharField('Категория получателя', choices=form_choice, max_length=20, default=0, blank=True,
+                            null=True)
     nalog = models.TextField('Налоговые льготы', null=True, blank=True)
+    percent = models.CharField('Процентная ставка', null=True, blank=True, max_length=200)
+
     class Meta:
         verbose_name = 'Мера поддержки'
         verbose_name_plural = 'Меры поддержки'
 
     def __str__(self):
-        return  self.name
+        return self.name
+
 
 class Document(models.Model):
     name = models.CharField('Название документа', max_length=150)
+    url = models.CharField('УРЛ', max_length=50, default='')
     file = models.FileField(upload_to='Documents', null=True)
 
     class Meta:
         verbose_name = 'Документ'
         verbose_name_plural = 'Документы'
 
+
 class Project(models.Model):
     industry = models.ForeignKey(Industry, on_delete=models.CASCADE, null=True, verbose_name='Отрасль')
     name = models.CharField('Наименование проекта', max_length=100)
     start = models.IntegerField('Начало реализации проекта', null=True)
     finish = models.IntegerField('Конец реализации проекта', null=True)
-    body = models.TextField('Описание проекта', null=True, blank=True)
+    body = models.TextField('Описание проекта проекта', null=True, blank=True)
     sum = models.IntegerField('Сумма инвестиций(млн.руб)')
     now = models.TextField('Текущее состояние проекта')
     image = models.ImageField(upload_to='Project', height_field=None, width_field=None, null=True,
@@ -179,5 +194,23 @@ class Project(models.Model):
 
     def get_absolute_url(self):
         return '{0}{1}'.format(settings.MEDIA_URL, self.image.url)
+
+
+class Contact(models.Model):
+    name = models.CharField('Фамилия, имя, отчество', max_length=200)
+    email = models.EmailField('Почта', max_length=300)
+    phone = models.CharField('Номер телефона', max_length=30)
+    position = models.CharField('Должность', max_length=500)
+    image = models.ImageField(upload_to='contacts', height_field=None, width_field=None, null=True,
+                              verbose_name='Фотография')
+
+    class Meta:
+        verbose_name = 'Контакт'
+        verbose_name_plural = 'Контакты'
+
+    def __str__(self):
+        return self.name
+
+
 
 
