@@ -45,7 +45,7 @@ class IndustryAdmin(admin.ModelAdmin):
 
 @admin.register(Document)
 class AdminDocument(admin.ModelAdmin):
-    list_display = ['name']
+    list_display = ['name', 'id']
 
 @admin.register(Project)
 class AdminProject(admin.ModelAdmin):
