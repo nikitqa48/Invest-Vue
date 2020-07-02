@@ -59,4 +59,7 @@ class AdminTypeProject(admin.ModelAdmin):
 class AdminFormProject(admin.ModelAdmin):
     list_display = ['title']
 
+@admin.register(Contact)
+class AdminContact(admin.ModelAdmin):
+    list_display = ['name']
 
