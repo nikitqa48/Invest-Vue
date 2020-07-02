@@ -79,3 +79,5 @@ class SumYear(APIView):
         project = Project.objects.filter(sum__lte=sum,start__lte=year, finish__gte=year, )
         serializers = ProjectSerializer(project, many=True, context={'request': request})
         return Response(serializers.data)
+
+

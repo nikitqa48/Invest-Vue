@@ -95,8 +95,8 @@ category_choices = (
     ('14', 'Земли водного фонда')
 )
 desired_choices = (
-    ('arend', 'Аренда'),
-    ('buy', 'Выкуп')
+    ('private', 'Частная'),
+    ('goverment', 'Государственная')
 )
 greenfield_choice = (
     ('oez', 'ОЭЗ ППТ'),

@@ -11,8 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'l5e=vzl_6z03lz#16z&hnq=5t+#xcmsy59aqr72g*61utkfj7z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+DEBUG = False
 # Application definition
 
 INSTALLED_APPS = [
@@ -117,18 +116,20 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
-
 STATIC_URL = '/static/'
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
+#STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
 #STATICFILES_DIRS = [
-#      os.path.join(BASE_DIR, 'static')
-#  ]
+#   os.path.join(BASE_DIR, 'static')
+#]
+
 CORS_ORIGIN_ALLOW_ALL = True
 
-STATIC_ROOT = os.path.join('static')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = '/home/invest/backend/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
 MEDIA_URL = '/media/'
 
 

@@ -38,7 +38,7 @@ class SupportSerializers(ModelSerializer):
                 'property_rate', 'profit', 'transport',
                 'land', 'nds', 'expenses', 'condition', 'territory',
                 'implementation', 'type_project', 'target', 'authority',
-                'project_name', 'program_name', 'npa', 'money', 'summ', 'loan_time']
+                'project_name', 'program_name', 'npa', 'money', 'summ', 'loan_time', 'percent']
 
 
 class ProjectSerializer(ModelSerializer):

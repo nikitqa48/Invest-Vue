@@ -123,14 +123,14 @@ class Support(models.Model):
     name = models.CharField('Имя поддержки', max_length=500)
     condition = models.TextField('Условия', blank=True)
     type = models.CharField('Вид поддержки', choices=choice, max_length=50)
-    organisation = models.TextField('кто выдает меру поддержки')
+    organisation = models.TextField('кто выдает меру поддержки', blank=True)
     industry = models.ManyToManyField(Industry, verbose_name='Отрасль')
     implementation = models.CharField('Способ реализации проекта', choices=implementation_choice, max_length=50, blank=True)
     type_project = models.ManyToManyField(TypeProject, blank=True, verbose_name='Тип проекта')
     target = models.TextField('Цели/адресаты гос.поддержки', default=0, blank=True)
     authority = models.CharField('Куррирующий орган', choices=authority_choices, max_length=50, blank=True)
     project_name = models.TextField('Наименование национального проекта', blank=True, default='')
-    program_name = models.TextField('Наименование гос.программы', default='')
+    program_name = models.TextField('Наименование гос.программы', default='', blank=True)
     npa = models.TextField('НПА устанавливающий меры', default='', blank=True)
     money = models.CharField('Объем меры гос.поддержки(млн.руб.)', max_length=150, blank=True)
     loan_time = models.CharField('Сроки займа', max_length=150, blank=True, default=0)
@@ -144,7 +144,6 @@ class Support(models.Model):
     expenses = models.TextField('Затраты подлежащие возмещению', blank=True)
     form = models.CharField('Категория получателя', choices=form_choice, max_length=20, default='', blank=True)
     nalog = models.TextField('Налоговые льготы', null=True, blank=True)
-
     class Meta:
         verbose_name = 'Мера поддержки'
         verbose_name_plural = 'Меры поддержки'

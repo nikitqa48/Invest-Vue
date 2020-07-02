@@ -59,3 +59,4 @@ class AdminTypeProject(admin.ModelAdmin):
 class AdminFormProject(admin.ModelAdmin):
     list_display = ['title']
 
+
