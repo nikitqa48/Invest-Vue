@@ -8,12 +8,12 @@ from django.conf import settings
 
 class Connect(models.Model):
     created = models.DateTimeField('Дата обращения', auto_now_add=True, db_index=True, null=True)
-    name = models.CharField('Имя', max_length=30)
+    name = models.CharField('Имя', max_length=30, )
     surname = models.CharField('Фамилия', max_length=30)
-    middle_name = models.CharField('Отчество', max_length=40, null=True)
+    middle_name = models.CharField('Отчество', max_length=40, null=True, blank=True)
     email = models.EmailField('Почта')
-    phone = models.CharField('Телефон', max_length=30)
-    organisation = models.CharField('Организация', max_length=50)
+    phone = models.CharField('Телефон', max_length=30, blank=True, null=True)
+    organisation = models.CharField('Организация', max_length=50, blank=True, null=True)
     text = models.TextField('Текст сообщения', blank=True)
 
     class Meta:
@@ -174,6 +174,7 @@ class Document(models.Model):
         verbose_name_plural = 'Документы'
 
 
+
 class Project(models.Model):
     industry = models.ForeignKey(Industry, on_delete=models.CASCADE, null=True, verbose_name='Отрасль')
     name = models.CharField('Наименование проекта', max_length=100)
@@ -184,6 +185,8 @@ class Project(models.Model):
     now = models.TextField('Текущее состояние проекта')
     image = models.ImageField(upload_to='Project', height_field=None, width_field=None, null=True,
                               verbose_name='Фотография проекта')
+    help = models.BooleanField('Нуждается в финансировании',  default=False)
+    # invest = models.ForeignKey(ProjectRequest, null=True, on_delete = models.CASCADE, blank=True, verbose_name='Заявление для финансирования')
 
     class Meta:
         verbose_name = 'Проект'
@@ -195,6 +198,17 @@ class Project(models.Model):
     def get_absolute_url(self):
         return '{0}{1}'.format(settings.MEDIA_URL, self.image.url)
 
+class ProjectRequest(models.Model):
+    name = models.CharField('ФИО', max_length=500, blank=True, null=True)
+    organisation = models.CharField('Организация', max_length=500, blank=True, null=True)
+    phone = models.CharField('Телефон', max_length=500, blank=True, null=True)
+    email = models.EmailField('Почта', blank=True, null=True)
+    comment = models.TextField('Комментарий', blank=True, null=True)
+    project = models.ForeignKey(Project, verbose_name = 'Проект', on_delete=models.CASCADE, null=True)
+    
+    class Meta:
+        verbose_name = 'Заявка  финансирования проекта'
+        verbose_name_plural = 'Заявки финансирования проектов'
 
 class Contact(models.Model):
     name = models.CharField('Фамилия, имя, отчество', max_length=200)
@@ -210,7 +224,3 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name
-
-
-
-

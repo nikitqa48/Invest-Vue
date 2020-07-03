@@ -45,21 +45,26 @@ class IndustryAdmin(admin.ModelAdmin):
 
 @admin.register(Document)
 class AdminDocument(admin.ModelAdmin):
-    list_display = ['name', 'id']
+    list_display = ['name']
 
 @admin.register(Project)
 class AdminProject(admin.ModelAdmin):
-    list_display = ['name', 'image', 'industry', 'sum', 'start', 'finish', 'body', 'now']
+    list_display = ['name', 'image', 'industry', 'sum', 'start', 'finish', 'body', 'now', 'id']
+    # readonly_fields = ['invest']
 
 @admin.register(TypeProject)
 class AdminTypeProject(admin.ModelAdmin):
     list_display = ['description']
 
 @admin.register(PrivateForm)
-class AdminFormProject(admin.ModelAdmin):
+class AdminPrivateForm(admin.ModelAdmin):
     list_display = ['title']
 
 @admin.register(Contact)
 class AdminContact(admin.ModelAdmin):
     list_display = ['name']
 
+@admin.register(ProjectRequest)
+class AdminProjectRequest(admin.ModelAdmin):
+    list_display =['project']
+    readonly_fields = ['project']

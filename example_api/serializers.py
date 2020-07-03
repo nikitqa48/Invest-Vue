@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer, StringRelatedField
+from rest_framework.serializers import ModelSerializer, StringRelatedField, PrimaryKeyRelatedField
 from rest_framework import serializers
 from .models import *
 
@@ -45,10 +45,24 @@ class ProjectSerializer(ModelSerializer):
     industry = StringRelatedField()
     class Meta:
         model = Project
-        fields = ['image','industry', 'name',  'sum', 'now', 'body', 'start', 'finish']
+        fields = ['image','industry', 'name',  'sum', 'now', 'body', 'start', 'finish', 'id', 'help']
 
 class ContactSerializer(ModelSerializer):
     class Meta:
         model = Contact
         fields = ['name', 'email', 'phone', 'position', 'image']
+
+class ProjectIdSerializer(ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ['id']
+
+class RequestSerializer(ModelSerializer):
+    project = PrimaryKeyRelatedField(many=True, read_only=True)
+    class Meta:
+        model = ProjectRequest
+        fields = ['name', 'organisation', 'phone', 'email', 'comment', 'project']
+    def create(self,validated_data):
+        print(validated_data)
+
 

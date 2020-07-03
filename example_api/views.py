@@ -83,3 +83,24 @@ class SumYear(APIView):
 class ContactListView(ListAPIView):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
+
+class ProjectRequestView(APIView):
+    def post(self, request):
+        print(request.data.get('project_id'))
+        data_project_id = request.data.get('project_id')
+        data_organisation = request.data.get('organisation')
+        data_phone = request.data.get('phone')
+        data_email = request.data.get('email')
+        data_name = request.data.get('name')
+        data_comment = request.data.get('comment')
+        project = Project.objects.get(id=data_project_id)
+        request_project = ProjectRequest.objects.create(
+            name = data_name,
+            project = project,
+            phone = data_phone,
+            email = data_email,
+            organisation = data_organisation,
+            comment = data_comment)
+        request_project.save()
+        print(request_project)
+        return Response('ok')
