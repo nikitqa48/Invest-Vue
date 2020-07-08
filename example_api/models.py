@@ -78,7 +78,7 @@ class Greenfield(models.Model):
     image = models.ImageField(upload_to='greenfield', height_field=None, width_field=None, null=True,
                               verbose_name='Фотография участка')
     square = models.CharField('Площадь(га)', max_length=10)
-    form = models.ManyToManyField(PrivateForm, verbose_name="Форма владения")
+    form = models.ManyToManyField(PrivateForm, verbose_name="Форма сделки")
     power = models.CharField('Электроснабжение', max_length=500, blank=True, null=True)
     water = models.CharField('Водоснабжение', max_length=500, blank=True, null=True)
     gas = models.CharField('Газоснабжение', max_length=500, blank=True, null=True)
@@ -87,12 +87,11 @@ class Greenfield(models.Model):
     description = models.TextField('Описание участка', blank=True, null=True)
     danger = models.CharField('Класс опасности', max_length=500, choices=danger_choices, default='1')
     category = models.CharField('Категория замель', max_length=50, choices=category_choices, default='0')
-    desired = models.CharField('Форма владения', max_length=50, choices=desired_choices, default='buy')
+    desired = models.CharField('Форма собственности', max_length=50, choices=desired_choices, null=True)
     customs_priveleges = models.CharField('Таможенные льготы', max_length=100, default='', blank=True, null=True)
     territory_priveleges = models.CharField('Льготная стоимость земли', max_length=100, default='', null=True,
                                             blank=True)
     nalog = models.TextField('Налоговые льготы', blank=True, null=True)
-    private = models.CharField('Вид собственности', choices=private_choice, max_length=100, null=True)
 
     class Meta:
         ordering = ('number',)
