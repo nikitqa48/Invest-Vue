@@ -5,7 +5,7 @@ from .models import *
 class ConnectSerializers(ModelSerializer):
     class Meta:
         model = Connect
-        fields = [ 'email', 'phone', 'name', 'surname', 'middle_name', 'organisation']
+        fields = [ 'email', 'phone', 'name', 'surname', 'middle_name', 'organisation', 'text']
 
 
 
@@ -20,7 +20,7 @@ class GreenfieldSerializers(ModelSerializer):
         model = Greenfield
         fields = ['image','square','form','region','number', 'type', 'power', 'water', 'gas',
                   'heat', 'water_out', 'description', 'danger', 'category',
-                  'desired', 'territory', 'number_territory', 'customs_priveleges', 'territory_priveleges']
+                  'desired', 'territory', 'number_territory', 'customs_priveleges', 'territory_priveleges', 'nalog']
 
 class IndustrySerializers(ModelSerializer):
     class Meta:

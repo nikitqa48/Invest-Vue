@@ -1,7 +1,27 @@
 from django.contrib import admin
 from .models import *
 from django import  forms
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
+
+class NewsAdminForm(forms.ModelForm):
+    body = forms.CharField(widget=CKEditorUploadingWidget())
+    class Meta:
+        model = News
+        fields = '__all__'
+
+class SupportAdminForm(forms.ModelForm):
+    organisation = forms.CharField(label='Кто выдает меру поддержки', widget=CKEditorUploadingWidget())
+    class Meta:
+        model = Support
+        fields = '__all__'
+
+class GreenfieldAdminForm(forms.ModelForm):
+    description = forms.CharField(label="Описание участка" ,widget=CKEditorUploadingWidget())
+    # nalog = forms.CharField(label='Налоговые льготы',widget=CKEditorUploadingWidget())
+    class Meta:
+        model = Greenfield
+        fields = '__all__'
 
 @admin.register(Connect)
 class ConnectAdmin(admin.ModelAdmin):
@@ -21,6 +41,7 @@ class NewsAdmin(admin.ModelAdmin):
     list_display = ['title','body','publish','created','updated','id']
     list_filter = ('created', 'publish')
     search_fields = ('title', 'body')
+    form = NewsAdminForm
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'publish'
     ordering = ['publish']
@@ -32,11 +53,13 @@ class GreenfieldAdmin(admin.ModelAdmin):
     list_filter = ['region', 'form']
     search_fields = ['number','square']
     ordering = ['region']
+    form = GreenfieldAdminForm
 
 
 @admin.register(Support)
 class SupportAdmin(admin.ModelAdmin):
     list_display = ['name']
+    form = SupportAdminForm
 
 
 @admin.register(Industry)
