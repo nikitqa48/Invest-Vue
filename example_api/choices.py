@@ -104,3 +104,7 @@ greenfield_choice = (
     ('industrial', 'Индустриальный парк'),
     ('any', 'Иная площадка')
 )
+contact_role_choice = (
+    ('leader', 'руководство'),
+    ('agent', 'агенство')
+)

@@ -212,6 +212,7 @@ class ProjectRequest(models.Model):
 class Contact(models.Model):
     name = models.CharField('Фамилия, имя, отчество', max_length=200)
     email = models.EmailField('Почта', max_length=300)
+    role = models.CharField('Роль', max_length=300, choices=contact_role_choice,  null=True)
     phone = models.CharField('Номер телефона', max_length=30)
     position = models.CharField('Должность', max_length=500)
     image = models.ImageField(upload_to='contacts', height_field=None, width_field=None, null=True,

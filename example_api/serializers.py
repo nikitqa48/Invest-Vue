@@ -50,7 +50,7 @@ class ProjectSerializer(ModelSerializer):
 class ContactSerializer(ModelSerializer):
     class Meta:
         model = Contact
-        fields = ['name', 'email', 'phone', 'position', 'image']
+        fields = ['name', 'email', 'phone', 'position', 'image', 'role']
 
 class ProjectIdSerializer(ModelSerializer):
     class Meta:
@@ -62,7 +62,6 @@ class RequestSerializer(ModelSerializer):
     class Meta:
         model = ProjectRequest
         fields = ['name', 'organisation', 'phone', 'email', 'comment', 'project']
-    def create(self,validated_data):
-        print(validated_data)
+
 
 
