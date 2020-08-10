@@ -1,6 +1,7 @@
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.pagination import LimitOffsetPagination
 from .serializers import *
 from django.http import FileResponse
 from django_filters.rest_framework import DjangoFilterBackend
@@ -10,6 +11,7 @@ class ConnectListView(CreateAPIView):
     serializer_class = ConnectSerializers
 
 class NewsView(ListAPIView):
+    pagination_class = None
     queryset = News.objects.order_by('-id')[0:5]
     serializer_class = NewsSerializers
 
@@ -19,6 +21,7 @@ class Allnews(ListAPIView):
     serializer_class = NewsSerializers
 
 class GreenfieldViews(ListAPIView):
+    pagination_class = None
     queryset = Greenfield.objects.all()
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['type']
@@ -26,6 +29,7 @@ class GreenfieldViews(ListAPIView):
 
 
 class SupportView(ListAPIView):
+    pagination_class = None
     queryset = Support.objects.all()
     serializer_class = SupportSerializers
     filter_backends = [DjangoFilterBackend]
@@ -47,7 +51,9 @@ class DocumentView(APIView):
         response = FileResponse(open(filename, 'rb'))
         return response
 
+
 class ProjectView(ListAPIView):
+    pagination_class = None
     queryset =  Project.objects.all()
     serializer_class = ProjectSerializer
     filter_backends = [DjangoFilterBackend]
@@ -81,6 +87,7 @@ class SumYear(APIView):
         return Response(serializers.data)
 
 class ContactListView(ListAPIView):
+    pagination_class = None
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
 

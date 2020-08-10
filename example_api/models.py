@@ -164,7 +164,7 @@ class Support(models.Model):
 
 
 class Document(models.Model):
-    name = models.CharField('Название документа', max_length=150)
+    name = models.CharField('Название документа', max_length=5000)
     url = models.CharField('УРЛ', max_length=50, default='')
     file = models.FileField(upload_to='Documents', null=True)
 
