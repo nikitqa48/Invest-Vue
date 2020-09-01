@@ -91,3 +91,7 @@ class AdminContact(admin.ModelAdmin):
 class AdminProjectRequest(admin.ModelAdmin):
     list_display =['project']
     readonly_fields = ['project']
+
+@admin.register(Event)
+class AdminEvent(admin.ModelAdmin):
+    list_display = ['organisation', 'name', 'second_name']

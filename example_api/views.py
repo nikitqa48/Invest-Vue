@@ -93,7 +93,6 @@ class ContactListView(ListAPIView):
 
 class ProjectRequestView(APIView):
     def post(self, request):
-        print(request.data.get('project_id'))
         data_project_id = request.data.get('project_id')
         data_organisation = request.data.get('organisation')
         data_phone = request.data.get('phone')
@@ -110,4 +109,26 @@ class ProjectRequestView(APIView):
             comment = data_comment)
         request_project.save()
         print(request_project)
+        return Response('ok')
+
+class EventRequestView(APIView):
+    def post(self, request):
+        data_organisation = request.data.get('organisation')
+        data_phone = request.data.get('phone')
+        data_email = request.data.get('email')
+        data_name = request.data.get('name'),
+        data_secondame = request.data.get('second_name'),
+        data_profile = request.data.get('profile')
+        data_role = request.data.get('role')
+        data_transfer = request.data.get('transfer')
+        request_event = Event.objects.create(
+            name = data_name,
+            profile = data_profile,
+            role = data_role,
+            phone = data_phone,
+            email = data_email,
+            second_name = data_secondame,
+            organisation = data_organisation,
+            transfer = data_transfer)
+        request_event.save()
         return Response('ok')

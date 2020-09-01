@@ -224,3 +224,21 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name
+
+class Event(models.Model):
+    email = models.EmailField('Почта', max_length=300, null=True)
+    name = models.CharField('Имя', max_length=300, null=True)
+    second_name = models.CharField('Фармилия', max_length=300, null=True)
+    phone = models.CharField('Номер телефона', max_length=30, null=True)
+    organisation = models.CharField('Название компании', max_length=500, blank=True, null=True)
+    profile = models.TextField('Профиль деятельности', null=True)
+    role = models.TextField('Ваша должность', null=True)
+    registration = models.DateTimeField('Зарегестрирован', default=timezone.now, null=True)
+    transfer = models.BooleanField('Нужен ли трансфер из города?', null=True)
+    
+    class Meta:
+        verbose_name = 'Cобытие'
+        verbose_name_plural = 'Событие'
+
+    def __str__(self):
+        return self.organisation 

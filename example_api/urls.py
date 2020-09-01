@@ -19,5 +19,6 @@ urlpatterns = [
   path('contacts/', ContactListView.as_view()),
   path('searchyear/<int:year>', SearchYearView.as_view()),
   path('searchyear/<int:year>/<int:industry>', SearchYearView.as_view()),
-  path('request/', ProjectRequestView.as_view())
+  path('request/', ProjectRequestView.as_view()),
+  path('event/', EventRequestView.as_view())
 ]
