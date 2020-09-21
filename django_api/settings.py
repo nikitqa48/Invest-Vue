@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'example_api',
     'rest_framework',
+    'Event',
     'corsheaders',
     'django_filters',
     'multiselectfield',
