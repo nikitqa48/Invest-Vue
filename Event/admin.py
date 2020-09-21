@@ -24,3 +24,8 @@ class EventAdmin(admin.ModelAdmin):
 class WinndersAdmin(admin.ModelAdmin):
     model = Event
     list_display = ['event']
+
+@admin.register(Video)
+class VideoAdmin(admin.ModelAdmin):
+    model = Video
+    list_display = ['name']

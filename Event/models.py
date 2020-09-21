@@ -14,7 +14,16 @@ class Organisation(models.Model):
         return self.name
 
 
+class Video(models.Model):
+    name = models.CharField('Название победителя', max_length=500 , )
+    video = models.URLField('Видео')
 
+    class Meta:
+        verbose_name = 'Поздравление'
+        verbose_name_plural = 'Поздравления'
+
+    def __str__(self):
+        return self.name    
 
 class Event(models.Model):
     title = models.CharField('Название События', max_length=800, null=True)
@@ -23,7 +32,7 @@ class Event(models.Model):
     date = models.DateTimeField('Дата и время проведения', null=True)
     partner = models.ManyToManyField(Organisation, verbose_name='Учаcтники')
     draft = models.BooleanField('добавить в архив', null= True, blank=True)
-
+    video = models.ManyToManyField(Video, blank=True, null=True, verbose_name='Призеры')
     class Meta:
         verbose_name = 'Мероприятие'
         verbose_name_plural = 'Мероприятия'

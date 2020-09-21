@@ -3,6 +3,11 @@ from rest_framework import serializers
 from .models import *
 
 
+class VideoSerializer(ModelSerializer):
+    class Meta:
+        model = Video
+        fields = ('video',)
+
 class OrganisationSerializer(ModelSerializer):
     class Meta:
         model = Organisation
@@ -10,6 +15,7 @@ class OrganisationSerializer(ModelSerializer):
 
 class EventSerializer(ModelSerializer):
     date = serializers.DateTimeField()
+    video = VideoSerializer(many=True)
     partner = OrganisationSerializer(many=True)
     class Meta:
         model = Event
