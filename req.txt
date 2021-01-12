@@ -1,0 +1,6 @@
+Pillow
+Django
+django-filter
+django-multiselectfield
+django-rest-framework
+django-cors-headers
