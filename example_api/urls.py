@@ -20,5 +20,6 @@ urlpatterns = [
   path('searchyear/<int:year>', SearchYearView.as_view()),
   path('searchyear/<int:year>/<int:industry>', SearchYearView.as_view()),
   path('request/', ProjectRequestView.as_view()),
-  path('event/', EventRequestView.as_view())
+  path('event/', EventRequestView.as_view()),
+  path('xz/', CopyGreenfield.as_view())
 ]

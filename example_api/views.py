@@ -132,3 +132,91 @@ class EventRequestView(APIView):
             transfer = data_transfer)
         request_event.save()
         return Response('ok')
+
+
+
+class CopyNews(APIView):
+    def get(self, request):
+        allnews = News.objects.all()
+        for item in allnews:
+            new = NewsTranslate(
+                title = item.title,
+                image = item.image,
+                slug = item.slug,
+                body = item.body,
+                publish = item.publish,
+                updated = item.updated
+            )
+            new.save()
+        return Response('ok')
+
+class CopySupport(APIView):
+    def get(self, request):
+        supports = Support.objects.all()
+        for sup in supports:
+            supp = SupportTranslate(
+            name=sup.name,
+            territory = sup.territory,
+            recipient = sup.recipient,
+            type=sup.type,
+            implementation=sup.implementation,
+            authority=sup.authority,
+            form=sup.form,
+            target=sup.target,
+            nalog=sup.nalog,
+            expenses=sup.expenses,
+            project_name=sup.project_name,
+            program_name=sup.program_name,
+            npa=sup.npa,
+            organisation=sup.organisation,
+            condition=sup.condition,
+            category=sup.category,
+            loan_time=sup.loan_time,
+            property_rate=sup.property_rate,
+            profit=sup.profit,
+            transport=sup.transport,
+            land=sup.land,
+            nds=sup.nds,
+            money=sup.money,
+            summ=sup.summ,
+            percent=sup.percent
+            )
+            supp.save()
+            supp.industry.set(sup.industry.all()) 
+            supp.type_project.set(sup.type_project.all())
+        return Response('ok')
+
+class CopyGreenfield(APIView):
+    def get(self, request):
+        greenfields = Greenfield.objects.all()
+        for item in greenfields:
+            greenfield = GreenfieldTranslate(
+                region = item.region,
+                number_territory = item.number_territory,
+                image = item.image,
+                number=item.number,
+                description = item.description,
+                territory = item.territory,
+                type = item.type,
+                square = item.square,
+                power = item.power,
+                water = item.water,
+                gas = item.gas,
+                heat = item.heat,
+                water_out = item.water_out,
+                danger = item.danger,
+                category = item.category,
+                desired = item.desired,
+                customs_priveleges = item.customs_priveleges,
+                territory_priveleges = item.territory_priveleges,
+                nalog = item.nalog
+            )
+            greenfield.save()
+            greenfield.form.set(item.form.all())
+        return Response('ok')
+
+class GetSupport(APIView):
+    def get(self, request):
+        support = SupportTranslate.objects.all()
+        serialize = SupportSerialize(support, many=True)
+        return Response(serialize.data)       

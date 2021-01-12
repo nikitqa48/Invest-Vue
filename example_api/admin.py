@@ -2,25 +2,25 @@ from django.contrib import admin
 from .models import *
 from django import  forms
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from parler.admin import TranslatableAdmin, TranslatableModelForm
 
-
-class NewsAdminForm(forms.ModelForm):
+class NewsAdminForm(TranslatableModelForm):
     body = forms.CharField(label ='Текст',widget=CKEditorUploadingWidget())
     class Meta:
-        model = News
+        model = NewsTranslate
         fields = '__all__'
 
-class SupportAdminForm(forms.ModelForm):
+class SupportAdminForm(TranslatableModelForm):
     organisation = forms.CharField(label='Кто выдает меру поддержки', widget=CKEditorUploadingWidget())
     class Meta:
-        model = Support
+        model = SupportTranslate
         fields = '__all__'
 
-class GreenfieldAdminForm(forms.ModelForm):
+class GreenfieldAdminForm(TranslatableModelForm):
     description = forms.CharField(label="Описание участка" ,widget=CKEditorUploadingWidget())
     # nalog = forms.CharField(label='Налоговые льготы',widget=CKEditorUploadingWidget())
     class Meta:
-        model = Greenfield
+        model = GreenfieldTranslate
         fields = '__all__'
 
 @admin.register(Connect)
@@ -36,28 +36,28 @@ class RegionAdmin(admin.ModelAdmin):
     list_filter = ['name']
 
 
-@admin.register(News)
-class NewsAdmin(admin.ModelAdmin):
-    list_display = ['title','body','publish','created','updated','id']
-    list_filter = ('created', 'publish')
-    search_fields = ('title', 'body')
-    form = NewsAdminForm
-    prepopulated_fields = {'slug': ('title',)}
-    date_hierarchy = 'publish'
-    ordering = ['publish']
+# @admin.register(News)
+# class NewsAdmin(admin.ModelAdmin):
+#     list_display = ['title','body','publish','created','updated','id']
+#     list_filter = ('created', 'publish')
+#     search_fields = ('title', 'body')
+#     form = NewsAdminForm
+#     prepopulated_fields = {'slug': ('title',)}
+#     date_hierarchy = 'publish'
+#     ordering = ['publish']
 
 
-@admin.register(Greenfield)
-class GreenfieldAdmin(admin.ModelAdmin):
-    list_display = ['number','square','region','form','image']
-    list_filter = ['region', 'form']
-    search_fields = ['number','square']
-    ordering = ['region']
-    form = GreenfieldAdminForm
+# @admin.register(Greenfield)
+# class GreenfieldAdmin(admin.ModelAdmin):
+#     list_display = ['number','square','region','form','image']
+#     list_filter = ['region', 'form']
+#     search_fields = ['number','square']
+#     ordering = ['region']
+#     form = GreenfieldAdminForm
 
 
-@admin.register(Support)
-class SupportAdmin(admin.ModelAdmin):
+@admin.register(SupportTranslate)
+class SupportAdmin(TranslatableAdmin):
     list_display = ['name']
     form = SupportAdminForm
 
@@ -73,7 +73,7 @@ class AdminDocument(admin.ModelAdmin):
 @admin.register(Project)
 class AdminProject(admin.ModelAdmin):
     list_display = ['name', 'image', 'industry', 'sum', 'start', 'finish', 'body', 'now', 'id']
-    # readonly_fields = ['invest']
+
 
 @admin.register(TypeProject)
 class AdminTypeProject(admin.ModelAdmin):
@@ -92,6 +92,28 @@ class AdminProjectRequest(admin.ModelAdmin):
     list_display =['project']
     readonly_fields = ['project']
 
-@admin.register(Event)
 class AdminEvent(admin.ModelAdmin):
     list_display = ['organisation', 'name', 'second_name']
+
+
+@admin.register(GreenfieldTranslate)
+class AdminTranslateGreenfield(TranslatableAdmin):
+    list_display = ['number','square','region','image']
+    list_filter = ['region', 'form']
+    search_fields = ['number','square']
+    ordering = ['region']
+    form = GreenfieldAdminForm
+    
+    class Meta:
+        model = GreenfieldTranslate
+        fields = '__all__'
+
+@admin.register(NewsTranslate)
+class NewsTranslateAdmin(TranslatableAdmin):
+    list_filter = ('publish',)
+    search_fields = ('title', 'body')
+    form = NewsAdminForm
+    # prepopulated_fields = {'slug': ('title',)}
+    date_hierarchy = 'publish'
+    ordering = ['publish']
+
