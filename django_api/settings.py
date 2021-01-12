@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'Event',
     'corsheaders',
     'django_filters',
+    'parler',
     'multiselectfield',
     'ckeditor',
     'ckeditor_uploader'
@@ -86,6 +87,16 @@ DATABASES = {
     }
 }
 
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'ru',},
+        {'code': 'en',},
+    ),
+    'default': {
+        'fallbacks': ['ru'],      
+        'hide_untranslated': False,   # Default
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

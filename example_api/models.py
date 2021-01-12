@@ -4,7 +4,30 @@ from django.utils import timezone
 from django.urls import reverse
 from .choices import *
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _
+from PIL import Image
+from io import BytesIO
+from parler.models import TranslatableModelMixin, TranslatedFields, TranslatableModel
+from django.core.files.base import ContentFile
+import os
 
+def get_path_upload_image(instance, filename):
+    """
+    Переопределение имени и путя фотографии, сокращение названия
+    В следующий формат: (media)/product/2019-08-20/photo-name_23-59-59.extension
+    """
+    if '/' in filename:
+        filename = filename.split('/')[-1]
+    img_header, img_extension = os.path.splitext(filename)
+    if len(img_header) > 30:
+        if img_header[-6:] == '_thumb':
+            img_header = img_header[:30] + '_thumb'
+        else:
+            img_header = img_header[:30]
+    time = timezone.now().strftime('%Y-%m-%d')
+    img_name = img_header + '_' + time + img_extension
+    path = os.path.join('product/', '{}').format(img_name)
+    return path
 
 class Connect(models.Model):
     created = models.DateTimeField('Дата обращения', auto_now_add=True, db_index=True, null=True)
@@ -240,3 +263,117 @@ class Event(models.Model):
         verbose_name = 'Cобытие'
         verbose_name_plural = 'Событие'
 
+
+class SupportTranslate(TranslatableModel):
+    territory = models.CharField('Территория реализации проекта', choices=territory_choice, max_length=50, blank=True)
+    recipient = models.CharField('Получатель', choices=recipient_choice, max_length=150)
+    type = models.CharField('Вид поддержки', choices=choice, max_length=50)
+    industry = models.ManyToManyField(Industry, verbose_name='Отрасль', related_name='industry')
+    implementation = models.CharField('Способ реализации проекта', choices=implementation_choice, max_length=50,
+                                      blank=True)
+    type_project = models.ManyToManyField(TypeProject, blank=True, verbose_name='Тип проекта')
+    authority = models.CharField('Куррирующий орган', choices=authority_choices, max_length=50, blank=True)
+
+    form = models.CharField('Категория получателя', choices=form_choice, max_length=20, default=0, blank=True,
+                            null=True)
+    
+
+    translations = TranslatedFields(
+        name = models.CharField('Имя поддержки', max_length=5000),
+        target = models.TextField('Цели/адресаты гос.поддержки', default=0, blank=True),
+        nalog = models.TextField('Налоговые льготы', null=True, blank=True),
+        expenses = models.TextField('Затраты подлежащие возмещению', blank=True),
+        project_name = models.TextField('Наименование национального проекта', blank=True, default=0),
+        program_name = models.TextField('Наименование гос.программы', default=0, blank=True),
+        npa = models.TextField('НПА устанавливающий меры', default=0, blank=True),
+        organisation = models.TextField('кто выдает меру поддержки'),
+        condition = models.TextField('Условия', blank=True),
+        category = models.CharField('Категория налогоплатильщика', max_length=300, blank=True),
+        loan_time = models.CharField('Сроки займа', max_length=150, blank=True, default=0),
+        property_rate = models.TextField('Налоговая ставка на имущество', blank=True),
+        profit = models.TextField('Налог на прибыль', blank=True),
+        transport = models.TextField('Налоговая ставка по транспортному налогу', blank=True),
+        land = models.TextField('Налоговая ставка по земельному налогу', blank=True),
+        nds = models.TextField('Налоговая ставка НДС', blank=True),
+        money = models.CharField('Объем меры гос.поддержки(млн.руб.)', max_length=150, blank=True),
+        summ = models.CharField('Сумма займа', max_length=50, blank=True, null=True),
+        percent = models.CharField('Процентная ставка', null=True, blank=True, max_length=200)
+    )
+    class Meta:
+        verbose_name = 'Мера поддержки'
+        verbose_name_plural = 'Меры поддержки'
+
+    def __str__(self):
+        return self.name
+
+class NewsTranslate(TranslatableModel):
+    publish = models.DateTimeField("Опубликован", default=timezone.now)
+    translations = TranslatedFields(
+    title = models.CharField('Заголовок', max_length=100),
+    image = models.ImageField(upload_to='News/img', height_field=None, width_field=None, null=True),
+    slug = models.SlugField(max_length=250, null=True),
+    body = models.TextField('Текст'),
+    updated = models.DateTimeField("Обновлен", auto_now=True)
+    )
+    
+    def get_absolute_url(self):
+        return reverse('post_detail',
+                       args=[self.slug])
+
+    def make_thumbnail(self):
+        image = Image.open(self.image)
+        if image.width > 1920 or image.height > 1080:
+            output_size = (1920, 1080)
+            image.thumbnail(output_size, Image.ANTIALIAS)
+            path = self.image
+            temp_thumb = BytesIO()
+            thumb_name, thumb_extension = os.path.splitext(self.image.name)
+            thumb_filename = thumb_name + '_thumb' + thumb_extension
+            image.save(temp_thumb, 'JPEG')
+            temp_thumb.seek(0)
+            self.image.save(thumb_filename, ContentFile(temp_thumb.read()), save=False)
+            temp_thumb.close()
+
+    def save(self, *args, **kwargs):
+        self.make_thumbnail()
+        super(NewsTranslate, self).save(*args, **kwargs)
+
+    class Meta:
+        ordering = ('-publish',)
+        verbose_name = 'Новость'
+        verbose_name_plural = "Новости"
+
+    def __str__(self):
+        return self.title
+
+class GreenfieldTranslate(TranslatableModel):
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, verbose_name='Район', null=True)
+    number_territory = models.CharField('Номер участка', max_length=100, default='')
+    number = models.CharField('Кадастровый номер', max_length=50, default=0)
+    image = models.ImageField(upload_to='greenfield', height_field=None, width_field=None, null=True,
+                              verbose_name='Фотография участка')
+    form = models.ManyToManyField(PrivateForm, verbose_name="Форма сделки")
+    translations = TranslatedFields(
+    description = models.TextField('Описание участка', blank=True, null=True),
+    territory = models.CharField('Территория участка', choices=greenfield_choice, max_length=50, null=True),
+    type = models.CharField('Тип участка', choices=choice_type, max_length=20, default=0),
+    square = models.CharField('Площадь(га)', max_length=10, default=''),
+    power = models.CharField('Электроснабжение', max_length=500, blank=True, null=True),
+    water = models.CharField('Водоснабжение', max_length=500, blank=True, null=True),
+    gas = models.CharField('Газоснабжение', max_length=500, blank=True, null=True),
+    heat = models.CharField('Теплоснабжение', max_length=500, blank=True, null=True),
+    water_out = models.CharField('Водоотведение', max_length=500, blank=True, null=True),
+    danger = models.CharField('Класс опасности', max_length=500, choices=danger_choices, default='1'),
+    category = models.CharField('Категория замель', max_length=50, choices=category_choices, default='0'),
+    desired = models.CharField('Форма собственности', max_length=50, choices=desired_choices, null=True),
+    customs_priveleges = models.CharField('Таможенные льготы', max_length=100, default='', blank=True, null=True),
+    territory_priveleges = models.CharField('Льготная стоимость земли', max_length=100, default='', null=True,
+                                            blank=True),
+    nalog = models.TextField('Налоговые льготы', blank=True, null=True)
+    )
+    class Meta:
+        verbose_name = 'Земельный участок'
+        verbose_name_plural = 'Земельные участки'
+
+    def __str__(self):
+        return self.number_territory
