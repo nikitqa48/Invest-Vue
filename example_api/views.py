@@ -12,7 +12,7 @@ class ConnectListView(CreateAPIView):
 
 class NewsView(ListAPIView):
     pagination_class = None
-    queryset = News.objects.order_by('-publish')[0:5]
+    queryset = NewsTranslate.objects.order_by('-publish')[0:5]
     serializer_class = NewsSerializers
 
 

@@ -21,5 +21,5 @@ urlpatterns = [
   path('searchyear/<int:year>/<int:industry>', SearchYearView.as_view()),
   path('request/', ProjectRequestView.as_view()),
   path('event/', EventRequestView.as_view()),
-  # path('xz/', CopySupport.as_view())
+  # path('xz/', CopyNews.as_view())
 ]
