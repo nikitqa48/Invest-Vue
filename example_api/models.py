@@ -308,12 +308,12 @@ class SupportTranslate(TranslatableModel):
 
 class NewsTranslate(TranslatableModel):
     publish = models.DateTimeField("Опубликован", default=timezone.now)
+    image = models.ImageField(upload_to='News/img', height_field=None, width_field=None, null=True)
+    slug = models.SlugField(max_length=250, null=True)
+    updated = models.DateTimeField("Обновлен", auto_now=True)
     translations = TranslatedFields(
     title = models.CharField('Заголовок', max_length=100),
-    image = models.ImageField(upload_to='News/img', height_field=None, width_field=None, null=True),
-    slug = models.SlugField(max_length=250, null=True),
     body = models.TextField('Текст'),
-    updated = models.DateTimeField("Обновлен", auto_now=True)
     )
     
     def get_absolute_url(self):

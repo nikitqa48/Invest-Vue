@@ -17,7 +17,7 @@ class NewsView(ListAPIView):
 
 
 class Allnews(ListAPIView):
-    queryset = News.objects.order_by('-publish')
+    queryset = NewsTranslate.objects.order_by('-publish')
     serializer_class = NewsSerializers
 
 class GreenfieldViews(ListAPIView):
@@ -30,18 +30,18 @@ class GreenfieldViews(ListAPIView):
 
 class SupportView(ListAPIView):
     pagination_class = None
-    queryset = Support.objects.all()
+    queryset = SupportTranslate.objects.all()
     serializer_class = SupportSerializers
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['type', 'recipient', 'industry', 'territory', 'form', 'name', 'type_project']
+    filterset_fields = ['type', 'recipient', 'industry', 'territory', 'form', 'type_project']
 
 
 class DetailNews(RetrieveAPIView):
-    queryset = News.objects.all()
+    queryset = NewsTranslate.objects.all()
     serializer_class = NewsSerializers
 
 class DetailSupport(RetrieveAPIView):
-    queryset = Support.objects.all()
+    queryset = SupportTranslate.objects.all()
     serializer_class = SupportSerializers
 
 class DocumentView(APIView):

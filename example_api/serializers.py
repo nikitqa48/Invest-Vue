@@ -1,5 +1,6 @@
 from rest_framework.serializers import ModelSerializer, StringRelatedField, PrimaryKeyRelatedField
 from rest_framework import serializers
+from parler_rest.serializers import TranslatableModelSerializer, TranslatedFieldsField
 from .models import *
 
 class ConnectSerializers(ModelSerializer):
@@ -9,10 +10,11 @@ class ConnectSerializers(ModelSerializer):
 
 
 
-class NewsSerializers(ModelSerializer):
+class NewsSerializers(TranslatableModelSerializer):
+    translations = TranslatedFieldsField(shared_model=NewsTranslate)
     class Meta:
-        model = News
-        fields = ['title','body','publish','created','updated','id','image', 'slug']
+        model = NewsTranslate
+        fields = '__all__'
 
 class GreenfieldSerializers(ModelSerializer):
     form = StringRelatedField(many=True)
@@ -28,18 +30,13 @@ class IndustrySerializers(ModelSerializer):
         fields = ['name']
 
 
-class SupportSerializers(ModelSerializer):
+class SupportSerializers(TranslatableModelSerializer):
     industry = StringRelatedField(many=True)
     type_project = StringRelatedField(many=True)
+    translations = TranslatedFieldsField(shared_model=SupportTranslate)
     class Meta:
-        model = Support
-        fields = ['id', 'recipient', 'name', 'type','form',
-                'organisation', 'category', 'industry',
-                'property_rate', 'profit', 'transport',
-                'land', 'nds', 'expenses', 'condition', 'territory',
-                'implementation', 'type_project', 'target', 'authority',
-                'project_name', 'program_name', 'npa', 'money', 'summ', 'loan_time', 'percent']
-
+        model = SupportTranslate
+        fields = ['id', 'recipient', 'name', 'type','form','translations', 'industry', 'type_project']
 
 class ProjectSerializer(ModelSerializer):
     industry = StringRelatedField()
@@ -62,6 +59,5 @@ class RequestSerializer(ModelSerializer):
     class Meta:
         model = ProjectRequest
         fields = ['name', 'organisation', 'phone', 'email', 'comment', 'project']
-
 
 
