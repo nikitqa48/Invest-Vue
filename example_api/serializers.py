@@ -36,7 +36,7 @@ class SupportSerializers(TranslatableModelSerializer):
     translations = TranslatedFieldsField(shared_model=SupportTranslate)
     class Meta:
         model = SupportTranslate
-        fields = ['id', 'recipient', 'name', 'type','form','translations', 'industry', 'type_project']
+        fields = '__all__'
 
 class ProjectSerializer(ModelSerializer):
     industry = StringRelatedField()
