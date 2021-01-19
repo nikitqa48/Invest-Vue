@@ -70,9 +70,12 @@ class IndustryAdmin(admin.ModelAdmin):
 class AdminDocument(admin.ModelAdmin):
     list_display = ['name', 'id']
 
-@admin.register(Project)
-class AdminProject(admin.ModelAdmin):
-    list_display = ['name', 'image', 'industry', 'sum', 'start', 'finish', 'body', 'now', 'id']
+@admin.register(ProjectTranslate)
+class AdminProject(TranslatableAdmin):
+    # list_display = ['name', 'image', 'industry', 'sum', 'start', 'finish', 'body', 'now', 'id']
+    class Meta:
+        model = ProjectTranslate
+        fields = '__all__'
 
 
 @admin.register(TypeProject)
