@@ -76,8 +76,12 @@ class AdminProject(TranslatableAdmin):
     class Meta:
         model = ProjectTranslate
         fields = '__all__'
+<<<<<<< HEAD
 
 
+=======
+        
+>>>>>>> 6015bc26bb01e0386ccd6d8df3d4eaa8a9ac2f4f
 @admin.register(TypeProject)
 class AdminTypeProject(admin.ModelAdmin):
     list_display = ['description']
