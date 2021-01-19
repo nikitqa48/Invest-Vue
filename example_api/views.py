@@ -220,3 +220,21 @@ class GetSupport(APIView):
         support = SupportTranslate.objects.all()
         serialize = SupportSerialize(support, many=True)
         return Response(serialize.data)       
+
+# class CopyProject(APIView):
+#     def get(self, request):
+#         project = Project.objects.all()
+#         for item in project:
+#             projects = ProjectTranslate(
+#                 industry = item.industry,
+#                 start = item.start,
+#                 finish = item.finish,
+#                 sum = item.sum,
+#                 image = item.image,
+#                 help = item.help,
+#                 name = item.name,
+#                 body = item.body,
+#                 now = item.now
+#             )
+#             projects.save()
+#         return Response('ok')

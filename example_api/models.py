@@ -377,3 +377,29 @@ class GreenfieldTranslate(TranslatableModel):
 
     def __str__(self):
         return self.number_territory
+
+class ProjectTranslate(TranslatableModel):
+    industry = models.ForeignKey(Industry, on_delete=models.CASCADE, null=True, verbose_name='Отрасль')
+    start = models.IntegerField('Начало реализации проекта', null=True)
+    finish = models.IntegerField('Конец реализации проекта', null=True)
+    sum = models.IntegerField('Сумма инвестиций(млн.руб)', null=True,blank=True)
+    image = models.ImageField(upload_to='Project', height_field=None, width_field=None, null=True,
+                              verbose_name='Фотография проекта')
+    help = models.BooleanField('Нуждается в финансировании',  default=False)
+    translations = TranslatedFields(
+    name = models.CharField('Наименование проекта', max_length=100),
+    body = models.TextField('Описание проекта проекта', null=True, blank=True),
+    now = models.TextField('Текущее состояние проекта')
+
+    )
+    
+
+    class Meta:
+        verbose_name = 'Проект'
+        verbose_name_plural = 'Проекты'
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return '{0}{1}'.format(settings.MEDIA_URL, self.image.url)
