@@ -191,29 +191,38 @@ class CopyGreenfield(APIView):
         greenfields = Greenfield.objects.all()
         for item in greenfields:
             greenfield = GreenfieldTranslate(
-                region = item.region,
-                number_territory = item.number_territory,
-                image = item.image,
+                start = item.start,
+                finish = item.finish,
+                sum = item.sum,
                 number=item.number,
-                description = item.description,
-                territory = item.territory,
+                image = item.image,
+                help = item.help,
                 type = item.type,
-                square = item.square,
-                power = item.power,
-                water = item.water,
-                gas = item.gas,
-                heat = item.heat,
-                water_out = item.water_out,
-                danger = item.danger,
-                category = item.category,
-                desired = item.desired,
-                customs_priveleges = item.customs_priveleges,
-                territory_priveleges = item.territory_priveleges,
-                nalog = item.nalog
+                name = item.name,
+                body = item.body,
+                now = item.now
             )
-            greenfield.save()
-            greenfield.form.set(item.form.all())
+            project.save()
+            project.industry.set(item.industry.all())
         return Response('ok')
+
+# class CopyProject(APIView):
+#     def get(self, request):
+#         project = Project.objects.all()
+#         for item in project:
+#             projects = ProjectTranslate(
+#                 industry = item.industry,
+#                 start = item.start,
+#                 finish = item.finish,
+#                 sum = item.sum,
+#                 image = item.image,
+#                 help = item.help,
+#                 name = item.name,
+#                 body = item.body,
+#                 now = item.now
+#             )
+#             projects.save()
+#         return Response('ok')
 
 class GetSupport(APIView):
     def get(self, request):
