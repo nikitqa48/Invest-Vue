@@ -21,9 +21,5 @@ urlpatterns = [
   path('searchyear/<int:year>/<int:industry>', SearchYearView.as_view()),
   path('request/', ProjectRequestView.as_view()),
   path('event/', EventRequestView.as_view()),
-<<<<<<< HEAD
-  # path('xz/', GetNew.as_view())
-=======
   path('xz/', GetNew.as_view())
->>>>>>> ceebce78c612aac854a24e80766f871d57ff3012
 ]
