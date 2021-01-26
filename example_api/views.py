@@ -250,9 +250,9 @@ class GetSupport(APIView):
 
 class GetNew(APIView):
     def get(self, request):
-        new = NewsTranslate.objects.get(id=1150)
+        new = NewsTranslate.objects.get(id=1449)
         news = NewsTranslate(
-            id = 1449,
+            id = 1149,
             publish = new.publish,
             image = new.image,
             slug = new.slug,
