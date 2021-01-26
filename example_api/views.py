@@ -247,3 +247,19 @@ class GetSupport(APIView):
 #             )
 #             projects.save()
 #         return Response('ok')
+
+class GetNew(APIView):
+    def get(self, request):
+        new = NewsTranslate.objects.get(id=1150)
+        news = NewsTranslate(
+            id = 1449,
+            publish = new.publish,
+            image = new.image,
+            slug = new.slug,
+            updated = new.updated,
+            title = new.title,
+            body = new.body
+        )
+        news.save()
+        print(news)
+        return Response('xz')
