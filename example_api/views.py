@@ -54,7 +54,7 @@ class DocumentView(APIView):
 
 class ProjectView(ListAPIView):
     pagination_class = None
-    queryset =  Project.objects.all()
+    queryset =  ProjectTranslate.objects.all()
     serializer_class = ProjectSerializer
     filter_backends = [DjangoFilterBackend]
 
@@ -62,11 +62,11 @@ class FilterProject(APIView):
     def get(self, request, number, industry=None, year=None):
         if year:
             print(Project.objects.filter(industry__name='промышленность'))
-            project = Project.objects.filter(sum__lte=number, industry=industry).filter(start__lte=year ,finish__gte=year)
+            project = ProjectTranslate.objects.filter(sum__lte=number, industry=industry).filter(start__lte=year ,finish__gte=year)
         elif industry:
-            project = Project.objects.filter(sum__lte=number, industry=industry)
+            project = ProjectTranslate.objects.filter(sum__lte=number, industry=industry)
         else:
-            project = Project.objects.filter(sum__lte=number)
+            project = ProjectTranslate.objects.filter(sum__lte=number)
         serializer = ProjectSerializer(project, many=True, context={"request":request})
         # text = News.objects.filter(body__contains=pk)
         return Response(serializer.data)
@@ -74,9 +74,9 @@ class FilterProject(APIView):
 class SearchYearView(APIView):
     def get(self, request, year, industry=None):
         if industry:
-            project = Project.objects.filter(start__lte=year, finish__gte=year, industry=industry)
+            project = ProjectTranslate.objects.filter(start__lte=year, finish__gte=year, industry=industry)
         else:
-            project = Project.objects.filter(start__lte=year, finish__gte=year)
+            project = ProjectTranslate.objects.filter(start__lte=year, finish__gte=year)
         serializers = ProjectSerializer(project, many=True, context={'request':request})
         return Response(serializers.data)
 

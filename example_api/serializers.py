@@ -38,11 +38,12 @@ class SupportSerializers(TranslatableModelSerializer):
         model = SupportTranslate
         fields = '__all__'
 
-class ProjectSerializer(ModelSerializer):
+class ProjectSerializer(TranslatableModelSerializer):
     industry = StringRelatedField()
+    translations = TranslatedFieldsField(shared_model=ProjectTranslate)
     class Meta:
-        model = Project
-        fields = ['image','industry', 'name',  'sum', 'now', 'body', 'start', 'finish', 'id', 'help']
+        model = ProjectTranslate
+        fields = ['image','industry',  'sum', 'start', 'finish', 'id', 'help', 'translations']
 
 class ContactSerializer(ModelSerializer):
     class Meta:
