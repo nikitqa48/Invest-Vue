@@ -85,9 +85,12 @@ class AdminTypeProject(admin.ModelAdmin):
 class AdminPrivateForm(admin.ModelAdmin):
     list_display = ['title']
 
-@admin.register(Contact)
-class AdminContact(admin.ModelAdmin):
+@admin.register(ContactTranslate)
+class AdminContact(TranslatableAdmin):
     list_display = ['name']
+    class Meta:
+        model = ContactTranslate
+        fields = '__all__'
 
 @admin.register(ProjectRequest)
 class AdminProjectRequest(admin.ModelAdmin):

@@ -403,3 +403,21 @@ class ProjectTranslate(TranslatableModel):
 
     def get_absolute_url(self):
         return '{0}{1}'.format(settings.MEDIA_URL, self.image.url)
+
+class ContactTranslate(TranslatableModel):
+    translations = TranslatedFields(
+        name = models.CharField('Фамилия, имя, отчество', max_length=200),
+        position = models.CharField('Должность', max_length=500)
+    )
+    email = models.EmailField('Почта', max_length=300)
+    role = models.CharField('Роль', max_length=300, choices=contact_role_choice,  null=True)
+    phone = models.CharField('Номер телефона', max_length=30)
+    image = models.ImageField(upload_to='contacts', height_field=None, width_field=None, null=True,
+                              verbose_name='Фотография')
+
+    class Meta:
+        verbose_name = 'Контакт'
+        verbose_name_plural = 'Контакты'
+
+    def __str__(self):
+        return self.name

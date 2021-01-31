@@ -45,10 +45,11 @@ class ProjectSerializer(TranslatableModelSerializer):
         model = ProjectTranslate
         fields = ['image','industry',  'sum', 'start', 'finish', 'id', 'help', 'translations']
 
-class ContactSerializer(ModelSerializer):
+class ContactSerializer(TranslatableModelSerializer):
+    translations = TranslatedFieldsField(shared_model=ContactTranslate)
     class Meta:
-        model = Contact
-        fields = ['name', 'email', 'phone', 'position', 'image', 'role']
+        model = ContactTranslate
+        fields = '__all__'
 
 class ProjectIdSerializer(ModelSerializer):
     class Meta:

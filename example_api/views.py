@@ -88,7 +88,7 @@ class SumYear(APIView):
 
 class ContactListView(ListAPIView):
     pagination_class = None
-    queryset = Contact.objects.all()
+    queryset = ContactTranslate.objects.all()
     serializer_class = ContactSerializer
 
 class ProjectRequestView(APIView):
@@ -263,3 +263,18 @@ class GetNew(APIView):
         news.save()
         print(news)
         return Response('xz')
+
+class CopyContacts(APIView):
+    def get(self, request):
+        contacts = Contact.objects.all()
+        for item in contacts:
+            new = ContactTranslate(
+                name = item.name,
+                position = item.position,
+                email = item.email,
+                role = item.role,
+                phone = item.phone,
+                image = item.image
+            )
+            new.save()
+        return Response('ok')
