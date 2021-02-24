@@ -102,6 +102,7 @@ greenfield_choice = (
     ('oez', 'ОЭЗ ППТ'),
     ('oezru', 'ОЭЗ Ру'),
     ('industrial', 'Индустриальный парк'),
+    ('techno', 'Технопар'),
     ('any', 'Иная площадка')
 )
 contact_role_choice = (

@@ -101,13 +101,13 @@ class AdminEvent(admin.ModelAdmin):
     list_display = ['organisation', 'name', 'second_name']
 
 
-@admin.register(GreenfieldTranslate)
-class AdminTranslateGreenfield(TranslatableAdmin):
+@admin.register(Greenfield)
+class AdminTranslateGreenfield(admin.ModelAdmin):
     list_display = ['number','square','region','image']
     list_filter = ['region', 'form']
     search_fields = ['number','square']
     ordering = ['region']
-    form = GreenfieldAdminForm
+    # form = GreenfieldAdminForm
     
     class Meta:
         model = GreenfieldTranslate
