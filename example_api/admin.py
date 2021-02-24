@@ -16,11 +16,11 @@ class SupportAdminForm(TranslatableModelForm):
         model = SupportTranslate
         fields = '__all__'
 
-class GreenfieldAdminForm(TranslatableModelForm):
+class GreenfieldAdminForm(forms.ModelForm):
     description = forms.CharField(label="Описание участка" ,widget=CKEditorUploadingWidget())
     # nalog = forms.CharField(label='Налоговые льготы',widget=CKEditorUploadingWidget())
     class Meta:
-        model = GreenfieldTranslate
+        model = Greenfield
         fields = '__all__'
 
 @admin.register(Connect)
@@ -107,7 +107,7 @@ class AdminTranslateGreenfield(admin.ModelAdmin):
     list_filter = ['region', 'form']
     search_fields = ['number','square']
     ordering = ['region']
-    # form = GreenfieldAdminForm
+    form = GreenfieldAdminForm
     
     class Meta:
         model = GreenfieldTranslate
