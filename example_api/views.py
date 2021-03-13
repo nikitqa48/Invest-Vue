@@ -135,76 +135,76 @@ class EventRequestView(APIView):
 
 
 
-class CopyNews(APIView):
-    def get(self, request):
-        allnews = News.objects.all()
-        for item in allnews:
-            new = NewsTranslate(
-                title = item.title,
-                image = item.image,
-                slug = item.slug,
-                body = item.body,
-                publish = item.publish,
-                updated = item.updated
-            )
-            new.save()
-        return Response('ok')
+# class CopyNews(APIView):
+#     def get(self, request):
+#         allnews = News.objects.all()
+#         for item in allnews:
+#             new = NewsTranslate(
+#                 title = item.title,
+#                 image = item.image,
+#                 slug = item.slug,
+#                 body = item.body,
+#                 publish = item.publish,
+#                 updated = item.updated
+#             )
+#             new.save()
+#         return Response('ok')
 
-class CopySupport(APIView):
-    def get(self, request):
-        supports = Support.objects.all()
-        for sup in supports:
-            supp = SupportTranslate(
-            name=sup.name,
-            territory = sup.territory,
-            recipient = sup.recipient,
-            type=sup.type,
-            implementation=sup.implementation,
-            authority=sup.authority,
-            form=sup.form,
-            target=sup.target,
-            nalog=sup.nalog,
-            expenses=sup.expenses,
-            project_name=sup.project_name,
-            program_name=sup.program_name,
-            npa=sup.npa,
-            organisation=sup.organisation,
-            condition=sup.condition,
-            category=sup.category,
-            loan_time=sup.loan_time,
-            property_rate=sup.property_rate,
-            profit=sup.profit,
-            transport=sup.transport,
-            land=sup.land,
-            nds=sup.nds,
-            money=sup.money,
-            summ=sup.summ,
-            percent=sup.percent
-            )
-            supp.save()
-            supp.industry.set(sup.industry.all()) 
-            supp.type_project.set(sup.type_project.all())
-        return Response('ok')
+# class CopySupport(APIView):
+#     def get(self, request):
+#         supports = Support.objects.all()
+#         for sup in supports:
+#             supp = SupportTranslate(
+#             name=sup.name,
+#             territory = sup.territory,
+#             recipient = sup.recipient,
+#             type=sup.type,
+#             implementation=sup.implementation,
+#             authority=sup.authority,
+#             form=sup.form,
+#             target=sup.target,
+#             nalog=sup.nalog,
+#             expenses=sup.expenses,
+#             project_name=sup.project_name,
+#             program_name=sup.program_name,
+#             npa=sup.npa,
+#             organisation=sup.organisation,
+#             condition=sup.condition,
+#             category=sup.category,
+#             loan_time=sup.loan_time,
+#             property_rate=sup.property_rate,
+#             profit=sup.profit,
+#             transport=sup.transport,
+#             land=sup.land,
+#             nds=sup.nds,
+#             money=sup.money,
+#             summ=sup.summ,
+#             percent=sup.percent
+#             )
+#             supp.save()
+#             supp.industry.set(sup.industry.all()) 
+#             supp.type_project.set(sup.type_project.all())
+#         return Response('ok')
 
-class CopyGreenfield(APIView):
-    def get(self, request):
-        greenfields = Greenfield.objects.all()
-        for item in greenfields:
-            greenfield = GreenfieldTranslate(
-                start = item.start,
-                finish = item.finish,
-                sum = item.sum,
-                number=item.number,
-                image = item.image,
-                help = item.help,
-                type = item.type,
-                name = item.name,
-                body = item.body,
-                now = item.now
-            )
-            project.save()
-            project.industry.set(item.industry.all())
-        return Response('ok')
+# class CopyGreenfield(APIView):
+#     def get(self, request):
+#         greenfields = Greenfield.objects.all()
+#         for item in greenfields:
+#             greenfield = GreenfieldTranslate(
+#                 start = item.start,
+#                 finish = item.finish,
+#                 sum = item.sum,
+#                 number=item.number,
+#                 image = item.image,
+#                 help = item.help,
+#                 type = item.type,
+#                 name = item.name,
+#                 body = item.body,
+#                 now = item.now
+#             )
+#             project.save()
+#             project.industry.set(item.industry.all())
+#         return Response('ok')
 
 # class CopyProject(APIView):
 #     def get(self, request):
@@ -248,33 +248,33 @@ class GetSupport(APIView):
 #             projects.save()
 #         return Response('ok')
 
-class GetNew(APIView):
-    def get(self, request):
-        new = NewsTranslate.objects.get(id=1449)
-        news = NewsTranslate(
-            id = 1149,
-            publish = new.publish,
-            image = new.image,
-            slug = new.slug,
-            updated = new.updated,
-            title = new.title,
-            body = new.body
-        )
-        news.save()
-        print(news)
-        return Response('xz')
+# class GetNew(APIView):
+#     def get(self, request):
+#         new = NewsTranslate.objects.get(id=1449)
+#         news = NewsTranslate(
+#             id = 1149,
+#             publish = new.publish,
+#             image = new.image,
+#             slug = new.slug,
+#             updated = new.updated,
+#             title = new.title,
+#             body = new.body
+#         )
+#         news.save()
+#         print(news)
+#         return Response('xz')
 
-class CopyContacts(APIView):
-    def get(self, request):
-        contacts = Contact.objects.all()
-        for item in contacts:
-            new = ContactTranslate(
-                name = item.name,
-                position = item.position,
-                email = item.email,
-                role = item.role,
-                phone = item.phone,
-                image = item.image
-            )
-            new.save()
-        return Response('ok')
+# class CopyContacts(APIView):
+#     def get(self, request):
+#         contacts = Contact.objects.all()
+#         for item in contacts:
+#             new = ContactTranslate(
+#                 name = item.name,
+#                 position = item.position,
+#                 email = item.email,
+#                 role = item.role,
+#                 phone = item.phone,
+#                 image = item.image
+#             )
+#             new.save()
+#         return Response('ok')
