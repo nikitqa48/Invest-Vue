@@ -9,6 +9,13 @@ class SectionAdminForm(forms.ModelForm):
         model = Section
         fields = '__all__'
 
+class SubsectionAdminForm(forms.ModelForm):
+    text = forms.CharField(label ='Текст',widget=CKEditorUploadingWidget())
+    class Meta:
+        model = SubSection
+        fields = '__all__'
+
+
 @admin.register(Section)
 class AdminSection(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
@@ -19,6 +26,7 @@ class AdminSection(admin.ModelAdmin):
 @admin.register(SubSection)
 class AdminSubSection(admin.ModelAdmin):
     list_filter = ('section',)
+    form = SubsectionAdminForm
     class Meta:
         fields = '__all__'
 
