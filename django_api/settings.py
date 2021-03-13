@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'Event',
     'corsheaders',
     'django_filters',
+    'documents',
     'parler',
     'multiselectfield',
     'ckeditor',
