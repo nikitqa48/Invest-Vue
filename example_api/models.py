@@ -36,6 +36,7 @@ class Connect(models.Model):
     middle_name = models.CharField('Отчество', max_length=40, null=True, blank=True)
     email = models.EmailField('Почта')
     phone = models.CharField('Телефон', max_length=30, blank=True, null=True)
+    check = models.BooleanField('Рассмотрено', blank=True, null=True, default=False)
     organisation = models.CharField('Организация', max_length=50, blank=True, null=True)
     text = models.TextField('Текст сообщения', blank=True)
 

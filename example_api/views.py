@@ -26,6 +26,12 @@ class GreenfieldViews(ListAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['type']
     serializer_class = GreenfieldSerializers
+    
+class CountConnect(APIView):
+    def get(self, request):
+        form = Connect.objects.all()
+        checked = Connect.objects.filter(check=True)
+        return Response({'all_connection':form.count(), 'check_connection':checked.count()})
 
 
 class SupportView(ListAPIView):
