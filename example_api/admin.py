@@ -25,8 +25,8 @@ class GreenfieldAdminForm(forms.ModelForm):
 
 @admin.register(Connect)
 class ConnectAdmin(admin.ModelAdmin):
-    list_display = ['name','surname','middle_name','email','phone','organisation','created']
-    list_filter = ['organisation']
+    list_display = ['name','surname','middle_name','email','phone','organisation','created', 'check']
+    list_filter = ['organisation', 'check']
     search_fields = ['email','phone', 'organisation']
 
 
