@@ -14,7 +14,7 @@ class Section(models.Model):
 class SubSection(models.Model):
     name = models.CharField('Название', max_length=5000)
     section = models.ForeignKey(Section, on_delete=models.CASCADE, verbose_name='Раздел')
-    text = models.TextField('Текст', default='')
+    text = models.TextField('Текст', default='', blank=True, null=True)
     class Meta:
         verbose_name = 'Подраздел'
         verbose_name_plural = 'Подразделы'
