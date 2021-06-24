@@ -16,7 +16,8 @@ if settings.DEBUG is True:
     path('event_api/', include('Event.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('file/', include('documents.urls')),
-    path('', include('example_api.urls'))
+    path('', include('example_api.urls')),
+    path('map/', include('map.urls'))
     ]
   
 

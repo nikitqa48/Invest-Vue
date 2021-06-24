@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'example_api',
     'rest_framework',
     'Event',
+    'map',
     'corsheaders',
     'django_filters',
     'documents',
